@@ -21,6 +21,7 @@ class Player:
     player_rect = None
     player_speed = 5
     movement_state = "idle"
+    animation_frame = 0
 
     side_imgs = []
     up_imgs = []
@@ -47,8 +48,15 @@ class Player:
             self.movement_state = "down"
 
     def render(self, window):
-        window.blit(self.player_image, self.player_rect)
-        if self.movement_state == "side":
-            for x in range(len(self.side_imgs)):
-                window.fill((0, 0, 0))                
-                window.blit(self.side_imgs[x], self.player_rect)
+        window.fill((0, 0, 0))
+        window.blit(self.side_imgs[self.animation_frame], self.player_rect)
+        self.animation_frame += 1
+        print(self.animation_frame)
+        if self.animation_frame >= 3:
+            self.animation_frame = 0
+        # window.blit(self.player_image, self.player_rect)
+
+        # if self.movement_state == "side":
+        #     for x in range(len(self.side_imgs)):
+        #         window.fill((0, 0, 0))                
+        #         window.blit(self.side_imgs[x], self.player_rect)
