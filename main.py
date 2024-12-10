@@ -10,10 +10,12 @@ run = True
 
 # Player
 
-player_img = pygame.image.load('design/Bob.png').convert_alpha()
-player_rect = player_img.get_rect()
-player = Player(player_img, player_rect)
-
+player = Player() 
+player.player_image = pygame.image.load('design/Bob.png').convert_alpha()
+player.player_rect = player.player_image.get_rect()
+player.side_imgs = [pygame.image.load('design/sides/side' + str(x) + '.png') for x in range(4)] # list comprehension
+player.up_imgs = [pygame.image.load('design/up/up' + str(x) + '.png') for x in range(6)]
+player.down_imgs = [pygame.image.load('design/down/down' + str(x) + '.png') for x in range(6)]
 
 while run:
     for event in pygame.event.get():
@@ -26,7 +28,7 @@ while run:
     player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d])
     player.render(window)
 
-
+    print(player.side_imgs)
 
     pygame.display.flip()
     clock.tick(FPS)

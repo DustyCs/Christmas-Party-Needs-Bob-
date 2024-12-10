@@ -11,7 +11,7 @@
     Add slime like animation for Bob
 
     Stop Bob from going outside the computer screen!
-    Bob is leaving a trail behind 0 o 0 - clean it! - Hint: Animations are images - Bob is an image that keeps getting drawn
+    Bob is leaving a trail behind 0 o 0 - clean it! - Animations are images - Bob is an image that keeps getting drawn
     Bob is sad about being too big :( - Rescale him
 
 """
@@ -21,9 +21,12 @@ class Player:
     player_rect = None
     player_speed = 5
 
-    def __init__(self, image, player_rect):
-        self.player_image = image
-        self.player_rect = player_rect
+    side_imgs = []
+    up_imgs = []
+    down_imgs = []
+
+    def __init__(self):
+        pass
 
     def testPrint(self): # The function you use when ya don't know what's up with the properties and methods
         print(self.player_rect) # Why is pygame ce being weird with cols?
