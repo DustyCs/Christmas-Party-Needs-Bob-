@@ -20,6 +20,7 @@ class Player:
     player_image = None
     player_rect = None
     player_speed = 5
+    movement_state = "idle"
 
     side_imgs = []
     up_imgs = []
@@ -34,12 +35,20 @@ class Player:
     def movement(self, K_w, K_a, K_s, K_d):
         if K_a:
             self.player_rect.x -= self.player_speed
+            # self.movement_state = "side"
         if K_d:
             self.player_rect.x += self.player_speed
+            self.movement_state = "side"
         if K_w:
             self.player_rect.y -= self.player_speed
+            self.movement_state = "up"
         if K_s:
             self.player_rect.y += self.player_speed
+            self.movement_state = "down"
 
     def render(self, window):
-        window.blit(self.player_image, (self.player_rect.x, self.player_rect.y)) # CB func example
+        window.blit(self.player_image, self.player_rect)
+        if self.movement_state == "side":
+            for x in range(len(self.side_imgs)):
+                window.fill((0, 0, 0))                
+                window.blit(self.side_imgs[x], self.player_rect)

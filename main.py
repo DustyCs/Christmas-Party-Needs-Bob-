@@ -17,6 +17,8 @@ player.side_imgs = [pygame.image.load('design/sides/side' + str(x) + '.png') for
 player.up_imgs = [pygame.image.load('design/up/up' + str(x) + '.png') for x in range(6)]
 player.down_imgs = [pygame.image.load('design/down/down' + str(x) + '.png') for x in range(6)]
 
+count = 0 # to update the frame bring the counter out
+
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -24,12 +26,21 @@ while run:
 
     keys = pygame.key.get_pressed()
 
-    player.testPrint()
+    # player.testPrint()
+    
+
     player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d])
-    player.render(window)
+    window.fill((0, 0, 0))
+    window.blit(player.side_imgs[count], player.player_rect) # frame isn't updated since it inside the loop
+    count += 1
+    print(count)
+    if count >= 3:
+        count = 0
+    
+    # player.render(window)
 
-    print(player.side_imgs)
-
+    # print(player.side_imgs)
+    
     pygame.display.flip()
     clock.tick(FPS)
 
