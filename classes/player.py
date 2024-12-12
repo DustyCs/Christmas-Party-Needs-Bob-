@@ -18,6 +18,7 @@
 
 class Player:
     player_image = None
+    player_sprite_idle = None
     player_rect = None
     player_speed = 5
     movement_state = "idle"
