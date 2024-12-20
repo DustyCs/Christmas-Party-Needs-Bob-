@@ -1,4 +1,5 @@
 import pygame, time # type: ignore - VC can't detect
+import _asyncio
 
 from classes.player import *
 

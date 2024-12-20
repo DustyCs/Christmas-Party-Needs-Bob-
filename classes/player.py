@@ -18,7 +18,7 @@ class Player():
         print(self.player_rect) 
 
     def movement(self, K_w, K_a, K_s, K_d, delta_time, FPS):
-        print(self.player_speed * delta_time * FPS)
+        # print(self.player_speed * delta_time * FPS)
         if K_a:
             self.player_rect.x -= self.player_speed * delta_time * FPS
             self.movement_state = "side" 
@@ -43,19 +43,17 @@ class Player():
         return image
     
     def idleAnimation(self):
-        self.frame_x += 1 # works
-        self.player_image = self.getImage(self.player_sprite_idle, self.frame_x, self.frame_y, 64, 64, 2, (0,0,0))
-        # print(self.frame_x, self.frame_y)
+        animation_speed = 0.2 # this only works with numbers that is a factor of 10!~
+        self.frame_x += animation_speed 
+        self.player_image = self.getImage(self.player_sprite_idle, int(self.frame_x), self.frame_y, 64, 64, 2, (0,0,0))
+        print(self.frame_x, self.frame_y)
 
-        if self.frame_y <= 3 and self.frame_x >= 5:
+        if self.frame_y <= 3 and int(self.frame_x) >= 5:
             self.frame_y += 1
-        if self.frame_y == 4 and self.frame_x >= 5:
+        if self.frame_y == 4 and int(self.frame_x) >= 5:
             self.frame_y = 0
-        if self.frame_x == 5:
+        if int(self.frame_x) == 5:
             self.frame_x = 0
-        
-       
-            
 
     def render(self, window):
         window.blit(self.player_image, self.player_rect)
