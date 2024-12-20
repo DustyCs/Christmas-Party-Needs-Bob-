@@ -4,7 +4,7 @@ class Player():
     player_image = None
     player_sprite_idle = None
     player_rect = None
-    player_speed = 5
+    player_speed = 10
     movement_state = "idle"
 
     animation_frame = 0
@@ -17,18 +17,19 @@ class Player():
     def testPrint(self): # The function you use when ya don't know what's up with the properties and methods
         print(self.player_rect) 
 
-    def movement(self, K_w, K_a, K_s, K_d):
+    def movement(self, K_w, K_a, K_s, K_d, delta_time, FPS):
+        print(self.player_speed * delta_time * FPS)
         if K_a:
-            self.player_rect.x -= self.player_speed
+            self.player_rect.x -= self.player_speed * delta_time * FPS
             self.movement_state = "side" 
         if K_d:
-            self.player_rect.x += self.player_speed
+            self.player_rect.x += self.player_speed * delta_time * FPS
             self.movement_state = "side"
         if K_w:
-            self.player_rect.y -= self.player_speed
+            self.player_rect.y -= self.player_speed * delta_time * FPS
             self.movement_state = "up"
         if K_s:
-            self.player_rect.y += self.player_speed
+            self.player_rect.y += self.player_speed * delta_time * FPS
             self.movement_state = "down"
 
         self.idleAnimation()
@@ -44,7 +45,7 @@ class Player():
     def idleAnimation(self):
         self.frame_x += 1 # works
         self.player_image = self.getImage(self.player_sprite_idle, self.frame_x, self.frame_y, 64, 64, 2, (0,0,0))
-        print(self.frame_x, self.frame_y)
+        # print(self.frame_x, self.frame_y)
 
         if self.frame_y <= 3 and self.frame_x >= 5:
             self.frame_y += 1
