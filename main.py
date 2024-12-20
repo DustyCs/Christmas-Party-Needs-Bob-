@@ -15,13 +15,10 @@ run = True
 player = Player() 
 player.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
 player.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
-# player.player_sprite_walk_right = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
-# player.player_sprite_walk_top = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
-# player.player_sprite_walk_bottom = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
 player.player_image = player.getImage(player.player_sprite_idle, player.frame_x, player.frame_y, 64, 64, 2, (0,0,0))
 player.player_rect = player.player_image.get_rect()
 
-# DTtry not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
+# DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
 previous_time = time.time()
 
 while run:
