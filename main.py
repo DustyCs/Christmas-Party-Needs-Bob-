@@ -1,35 +1,42 @@
-import pygame # type: ignore - VC can't detect
+import pygame, time # type: ignore - VC can't detect
+import _asyncio
+
 from classes.player import *
 
 pygame.init()
 
 window = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
-FPS = 60
+FPS = 30
 run = True
 
 # Player
 
 player = Player() 
-player.player_image = pygame.image.load('design/Bob.png').convert_alpha()
+player.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
+player.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
+player.player_image = player.getImage(player.player_sprite_idle, player.frame_x, player.frame_y, 64, 64, 2, (0,0,0))
 player.player_rect = player.player_image.get_rect()
-player.side_imgs = [pygame.image.load('design/sides/side' + str(x) + '.png') for x in range(4)] # list comprehension
-player.up_imgs = [pygame.image.load('design/up/up' + str(x) + '.png') for x in range(6)]
-player.down_imgs = [pygame.image.load('design/down/down' + str(x) + '.png') for x in range(6)]
 
+# DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
+previous_time = time.time()
 
 while run:
+    # DTimer
+    delta_time = time.time() - previous_time
+    previous_time = time.time()
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
     keys = pygame.key.get_pressed()
 
-    player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d])
-    window.fill((0, 0, 0))
-    
+    player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, FPS)
+
+    window.fill((100, 100, 100))
     player.render(window)
-    
+
     pygame.display.flip()
     clock.tick(FPS)
 

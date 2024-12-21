@@ -1,75 +1,124 @@
-"""
-    Player = Bob
+import pygame # type: ignore
+import time
+from utils.decorators import *
 
-    Bob needs control.
-    Bob needs to be able to smile.
-    ...
-
-    TODO
-
-    Need to load appropriate image when player is moving. Currently Bob has one used for all directions
-    Add slime like animation for Bob
-
-    Stop Bob from going outside the computer screen!
-    Bob is leaving a trail behind 0 o 0 - clean it! - Animations are images - Bob is an image that keeps getting drawn
-    Bob is sad about being too big :( - Rescale him
-
-"""
-
-class Player:
+class Player():
     player_image = None
+    player_sprite_idle = None
+    player_sprite_run = None
     player_rect = None
-    player_speed = 5
-    movement_state = "idle"
-    animation_frame = 0
+    player_speed = 10
 
-    side_imgs = []
-    up_imgs = []
-    down_imgs = []
+    movement_state = "idle"
+    direction = None
+
+    animation_speed= 0.2
+    animation_frame = 0
+    frame_x = 0
+    frame_y = 0
+
+    last_idle = time.time()
 
     def __init__(self):
         pass
 
     def testPrint(self): # The function you use when ya don't know what's up with the properties and methods
-        print(self.player_rect) # Why is pygame ce being weird with cols?
+        print(self.player_rect) 
 
-    def movement(self, K_w, K_a, K_s, K_d):
+    def movement(self, K_w, K_a, K_s, K_d, delta_time, FPS):
+        # print(self.player_speed * delta_time * FPS)
+        # print(self.last_idle)
+        """ 
+          
+        lorem ipsum here        
+
+        """
+
+        if self.movement_state == "idle":
+            self.idleAnimation()
+        if self.movement_state == "run":
+            self.runAnimation(self.direction)
+
+        player_velocity = self.player_speed * delta_time * FPS   
+        
+        # A VERY DRY PROBLEM
+
         if K_a:
-            self.player_rect.x -= self.player_speed
-            self.movement_state = "side" 
-            self.animation_frame += 1 # this would not reset if called in another key - need fix
-            if self.animation_frame >= 3: # this
-                self.animation_frame = 0 # this
-        if K_d:
-            self.player_rect.x += self.player_speed
-            self.movement_state = "side"
-            self.animation_frame += 1 
-            if self.animation_frame >= 3:
-                self.animation_frame = 0
-        if K_w:
-            self.player_rect.y -= self.player_speed
-            self.movement_state = "up"
-            self.animation_frame += 1 
-            if self.animation_frame >= 5:
-                self.animation_frame = 0
-        if K_s:
-            self.player_rect.y += self.player_speed
-            self.movement_state = "down"
-            self.animation_frame += 1 
-            if self.animation_frame >= 5:
-                self.animation_frame = 0
+            self.player_rect.x -= player_velocity
+            self.movement_state = "run"
+            self.direction = "left"
+            self.frame_x = int(self.frame_x) + 1
+        elif K_d:
+            self.player_rect.x += player_velocity
+            self.movement_state = "run"
+            self.direction = "right"
+            self.frame_x = int(self.frame_x) + 1
+            # self.frame_x = self.convertNextFrame(self.frame_x) # need to clean this
+            print(self.frame_x)
+        elif K_w:
+            self.player_rect.y -= player_velocity
+            self.movement_state = "run"
+            self.direction = "up"
+            self.frame_x = int(self.frame_x) + 1
+
+        elif K_s:
+            self.player_rect.y += player_velocity
+            self.movement_state = "run"
+            self.direction = "down"
+            self.frame_x = int(self.frame_x) + 1
+
+        else:
+            self.movement_state = "idle"
+        
+    def getImage(self, sheet, frame_x, frame_y, width, height, scale, color):
+        image = pygame.Surface((width, height)).convert_alpha()
+        image_base = 64
+        image.blit(sheet, (0, 0), ((width * frame_x), (image_base * frame_y), width, height))
+        image = pygame.transform.scale(image, (width * scale, height * scale))
+        image.set_colorkey(color)
+        return image
+    
+    def setLastIdle(self): self.last_idle = time.time()
+
+    def convertNextFrame(self, x): return int(x) + 1
+
+    def idleAnimation(self):
+        self.frame_x += self.animation_speed 
+        converted_frame = int(self.frame_x) 
+        
+        self.player_image = self.getImage(self.player_sprite_idle, converted_frame, self.frame_y, 64, 64, 2, (0,0,0))
+        # print(self.frame_x, self.frame_y)
+
+        if self.frame_y <= 3 and converted_frame >= 5:
+            self.frame_y += 1
+        if self.frame_y == 4 and converted_frame >= 5:
+            self.frame_y = 0
+        if converted_frame >= 5:
+            self.frame_x = 0
+
+    def runAnimation(self, direction):
+        self.player_image = self.getImage(self.player_sprite_run, self.frame_x, self.frame_y, 64, 64, 2, (0,0,0))
+        converted_frame = int(self.frame_x) 
+        self.frame_y = 3
+     
+        if converted_frame >= 7:
+            self.frame_x = 0
+
+        match direction:
+            case "left":
+                self.frame_y = 2
+            case "right":
+                self.frame_y = 3
+            case "up":
+                self.frame_y = 1
+            case "down":
+                self.frame_y = 0
+      
 
     def render(self, window):
-        window.fill((0, 0, 0))
         window.blit(self.player_image, self.player_rect)
 
-        # need cleaning and fixing - DRY - also reset the animation frame
-        if self.movement_state == "side":
-            window.fill((0, 0, 0))                
-            window.blit(self.side_imgs[self.animation_frame], self.player_rect)
-        if self.movement_state == "up":
-            window.fill((0, 0, 0))                
-            window.blit(self.up_imgs[self.animation_frame], self.player_rect)
-        if self.movement_state == "down":
-            window.fill((0, 0, 0))                
-            window.blit(self.down_imgs[self.animation_frame], self.player_rect)
+
+# do the same thing before maybe?
+# increment frame key every key pressed?
+# then reset to idle when no key is pressed - sounds good
