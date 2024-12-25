@@ -1,0 +1,59 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "House1.tsx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Borders.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "FieldsTileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "FirstStage Map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 442.66666666666663,
+                "y": 278
+            }
+        },
+        "House1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Houses.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/main_source_craftpix/craftpix-net-504452-free-village-pixel-tileset-for-top-down-defense/2 Objects/7 House",
+    "map.height": 23,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 40,
+    "openFiles": [
+        "FirstStage Map.tmx",
+        "FieldsTileset.tsx",
+        "Borders.tsx",
+        "House1.tsx"
+    ],
+    "project": "first_stage.tiled-project",
+    "recentFiles": [
+        "FirstStage Map.tmx",
+        "FieldsTileset.tsx",
+        "Borders.tsx",
+        "House1.tsx",
+        "Houses.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 112,
+        "width": 116
+    }
+}

@@ -9,6 +9,8 @@ class Player():
     player_rect = None
     player_speed = 10
 
+    attack_key = None
+
     movement_state = "idle"
     direction = None
 
@@ -30,7 +32,7 @@ class Player():
         # print(self.last_idle)
         """ 
           
-        lorem ipsum here        
+        Cleaaaaaaaaaan       
 
         """
 
@@ -48,6 +50,7 @@ class Player():
             self.movement_state = "run"
             self.direction = "left"
             self.frame_x = int(self.frame_x) + 1
+
         elif K_d:
             self.player_rect.x += player_velocity
             self.movement_state = "run"
@@ -55,6 +58,7 @@ class Player():
             self.frame_x = int(self.frame_x) + 1
             # self.frame_x = self.convertNextFrame(self.frame_x) # need to clean this
             print(self.frame_x)
+
         elif K_w:
             self.player_rect.y -= player_velocity
             self.movement_state = "run"
@@ -69,6 +73,12 @@ class Player():
 
         else:
             self.movement_state = "idle"
+
+
+        if self.attack_key:
+            pass
+    
+    def attack(self): pass
         
     def getImage(self, sheet, frame_x, frame_y, width, height, scale, color):
         image = pygame.Surface((width, height)).convert_alpha()
@@ -114,11 +124,8 @@ class Player():
             case "down":
                 self.frame_y = 0
       
+    def attackAnimation(self):
+        pass
 
     def render(self, window):
         window.blit(self.player_image, self.player_rect)
-
-
-# do the same thing before maybe?
-# increment frame key every key pressed?
-# then reset to idle when no key is pressed - sounds good
