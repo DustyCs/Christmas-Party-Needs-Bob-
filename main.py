@@ -45,11 +45,9 @@ while run:
 
     player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, FPS)
 
-    # background.testSurface_rect.x += 1
-
     window.fill((100, 100, 100))
-    background.render(window, player.player_rect, player.player_velocity)
-    player.render(window)
+    background.render(window, player.player_rect) # 
+    player.render(window) 
    
 
     pygame.display.flip()

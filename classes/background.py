@@ -28,31 +28,22 @@ class Background():
     def testDraw(self):
         pass
 
-    def render(self, window, player_offset, player_velocity):
+    def render(self, window, player_offset):
         self.player_offset = player_offset # add for collisions
         self.player_x = player_offset.x + 64 #player height
         self.player_y = player_offset.y + 64
 
         player_posx = self.background_rect.x - self.player_x
         player_posy = self.background_rect.y - self.player_y
-
-        # print(self.background_rect.x - self.player_x) # x will not never change because its not being actually change but just the place its being drawn by the blit
         
-        # Works
-
-        if not (player_posx >= 0 or player_posx <= -1280 or player_posy >= 0 or player_posy <= -720):
+        # Scroll
+        print(self.player_x)
+        if not ((player_posx >= 0 or player_posx <= -1280) or (player_posy >= 0 or player_posy <= -720)): # problem with scrolling again since it activates the else and stops the y scrolling
             window.blit(self.background_image, (self.background_rect.x - self.player_x, self.background_rect.y - self.player_y))
             self.lastPos = self.background_rect.x - self.player_x
             self.lastPosY = self.background_rect.y - self.player_y
-            # print(self.lastPos)
+        elif self.player_x >= 0 and not (player_posy >= 0 or player_posy <= -720):
+            window.blit(self.background_image, (self.lastPos, self.background_rect.y - self.player_y))
+            self.lastPosY = self.background_rect.y - self.player_y
         else:
-            # print(self.lastPos)
             window.blit(self.background_image, (self.lastPos, self.lastPosY))
-
-        # if not (player_posy >= 0 or player_posy <= -720):
-        #     window.blit(self.background_image, (self.background_rect.x - self.player_x, self.background_rect.y - self.player_y))
-        #     self.lastPosY = self.background_rect.y - self.player_y
-        #     print(self.lastPosY)
-        # else:
-        #     print(self.lastPosY)
-        #     window.blit(self.background_image, (self.lastPos, self.lastPosY))
