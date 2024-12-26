@@ -1,10 +1,6 @@
 import pygame
 
 class Background():
-    testSurface = pygame.Surface([500, 500])
-    testSurface_rect = testSurface.get_rect()
-    testSurface.fill((100, 255, 100))
-
     background_image = None
     background_rect = None
     width = None
@@ -12,6 +8,8 @@ class Background():
 
     lastPos = None
     lastPosY = None
+
+    objects = []
 
     player_offset = None # when checking for collision add this !
     player_x, player_y = None, None
@@ -25,8 +23,18 @@ class Background():
         self.background_rect.x = pos_x
         self.background_rect.y = pos_y
 
-    def testDraw(self):
-        pass
+    def createObject(self, w, h):
+        objectSurface = pygame.Surface([w, h])
+
+        # Edit
+
+
+        # Apply
+
+
+        # Ouput
+
+        return objectSurface
 
     def render(self, window, player_offset):
         self.player_offset = player_offset # add for collisions

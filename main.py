@@ -24,6 +24,10 @@ player.player_rect.x, player.player_rect.y = 600, 235
 # Background
 stage1_img = pygame.image.load('design/background/Background1.png').convert_alpha()
 background = Background(stage1_img, 300, 75, 2)
+ 
+bg_house = [(100, 100), 0, 0] # size, x, y
+fenced_area = [(50, 50), 0, 0]
+background.objects = [bg_house, fenced_area]
 
 # Tiled Data
 

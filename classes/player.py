@@ -14,6 +14,7 @@ class Player():
 
     movement_state = "idle"
     direction = None
+    collision = False
 
     animation_speed= 0.2
     animation_frame = 0
@@ -41,32 +42,35 @@ class Player():
         
         # A VERY DRY PROBLEM
 
-        if K_a:
-            self.player_rect.x -= self.player_velocity
-            self.movement_state = "run"
-            self.direction = "left"
-            self.frame_x = int(self.frame_x) + 1
-
-        elif K_d:
-            self.player_rect.x += self.player_velocity
-            self.movement_state = "run"
-            self.direction = "right"
-            self.frame_x = int(self.frame_x) + 1
-
-        elif K_w:
-            self.player_rect.y -= self.player_velocity
-            self.movement_state = "run"
-            self.direction = "up"
-            self.frame_x = int(self.frame_x) + 1
-
-        elif K_s:
-            self.player_rect.y += self.player_velocity
-            self.movement_state = "run"
-            self.direction = "down"
-            self.frame_x = int(self.frame_x) + 1
-
+        if (self.collision):
+            self.player_rect.x = self.player_rect.x
         else:
-            self.movement_state = "idle"
+            if K_a:
+                self.player_rect.x -= self.player_velocity
+                self.movement_state = "run"
+                self.direction = "left"
+                self.frame_x = int(self.frame_x) + 1
+
+            elif K_d:
+                self.player_rect.x += self.player_velocity
+                self.movement_state = "run"
+                self.direction = "right"
+                self.frame_x = int(self.frame_x) + 1
+
+            elif K_w:
+                self.player_rect.y -= self.player_velocity
+                self.movement_state = "run"
+                self.direction = "up"
+                self.frame_x = int(self.frame_x) + 1
+
+            elif K_s:
+                self.player_rect.y += self.player_velocity
+                self.movement_state = "run"
+                self.direction = "down"
+                self.frame_x = int(self.frame_x) + 1
+
+            else:
+                self.movement_state = "idle"
 
 
         if self.attack_key:
