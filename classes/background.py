@@ -11,6 +11,7 @@ class Background():
     height = None
 
     lastPos = None
+    lastPosY = None
 
     player_offset = None # when checking for collision add this !
     player_x, player_y = None, None
@@ -32,36 +33,26 @@ class Background():
         self.player_x = player_offset.x + 64 #player height
         self.player_y = player_offset.y + 64
 
-        player_passed = False
-        cancel_movement = 0
-        player_pos = self.background_rect.x - self.player_x
-    
-        
-    
-        print(self.background_rect.x - self.player_x) # x will not never change because its not being actually change but just the place its being drawn by the blit
-        
-        # Check if player passed this x value then cancel out
-        if(player_pos >= 0 or player_pos <= -1280):
-            player_passed = True
-            # print("tru")
-        else:
-            player_passed = False
+        player_posx = self.background_rect.x - self.player_x
+        player_posy = self.background_rect.y - self.player_y
 
-
-        # if player_passed:
-        #     cancel_movement = player_offset.x
-        #     print(self.background_rect.x)
-        # else:
-        #     cancel_movement = 0
+        # print(self.background_rect.x - self.player_x) # x will not never change because its not being actually change but just the place its being drawn by the blit
         
         # Works
 
-        if not player_passed:
+        if not (player_posx >= 0 or player_posx <= -1280 or player_posy >= 0 or player_posy <= -720):
             window.blit(self.background_image, (self.background_rect.x - self.player_x, self.background_rect.y - self.player_y))
             self.lastPos = self.background_rect.x - self.player_x
-            print(self.lastPos)
+            self.lastPosY = self.background_rect.y - self.player_y
+            # print(self.lastPos)
         else:
-            print(self.lastPos)
-            window.blit(self.background_image, (self.lastPos, self.background_rect.y - self.player_y))
+            # print(self.lastPos)
+            window.blit(self.background_image, (self.lastPos, self.lastPosY))
+
+        # if not (player_posy >= 0 or player_posy <= -720):
+        #     window.blit(self.background_image, (self.background_rect.x - self.player_x, self.background_rect.y - self.player_y))
+        #     self.lastPosY = self.background_rect.y - self.player_y
+        #     print(self.lastPosY)
         # else:
-        #     window.blit(self.background_image, (self.background_rect.x, self.background_rect.y - self.player_y))
+        #     print(self.lastPosY)
+        #     window.blit(self.background_image, (self.lastPos, self.lastPosY))
