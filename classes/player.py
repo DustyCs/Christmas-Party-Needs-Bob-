@@ -8,6 +8,7 @@ class Player():
     player_sprite_run = None
     player_rect = None
     player_speed = 10
+    player_velocity = None
 
     attack_key = None
 
@@ -41,32 +42,32 @@ class Player():
         if self.movement_state == "run":
             self.runAnimation(self.direction)
 
-        player_velocity = self.player_speed * delta_time * FPS   
+        self.player_velocity = self.player_speed * delta_time * FPS   
         
         # A VERY DRY PROBLEM
 
         if K_a:
-            self.player_rect.x -= player_velocity
+            self.player_rect.x -= self.player_velocity
             self.movement_state = "run"
             self.direction = "left"
             self.frame_x = int(self.frame_x) + 1
 
         elif K_d:
-            self.player_rect.x += player_velocity
+            self.player_rect.x += self.player_velocity
             self.movement_state = "run"
             self.direction = "right"
             self.frame_x = int(self.frame_x) + 1
             # self.frame_x = self.convertNextFrame(self.frame_x) # need to clean this
-            print(self.frame_x)
+            # print(self.frame_x)
 
         elif K_w:
-            self.player_rect.y -= player_velocity
+            self.player_rect.y -= self.player_velocity
             self.movement_state = "run"
             self.direction = "up"
             self.frame_x = int(self.frame_x) + 1
 
         elif K_s:
-            self.player_rect.y += player_velocity
+            self.player_rect.y += self.player_velocity
             self.movement_state = "run"
             self.direction = "down"
             self.frame_x = int(self.frame_x) + 1

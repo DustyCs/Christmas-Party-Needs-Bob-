@@ -22,7 +22,7 @@ player.player_rect = player.player_image.get_rect()
 player.player_rect.x, player.player_rect.y = 600, 235
 
 # Background
-stage1_img = pygame.image.load('design/background/FirstStage Map.png').convert_alpha()
+stage1_img = pygame.image.load('design/background/Background1.png').convert_alpha()
 background = Background(stage1_img, 300, 75, 2)
 
 # Tiled Data
@@ -48,7 +48,7 @@ while run:
     # background.testSurface_rect.x += 1
 
     window.fill((100, 100, 100))
-    background.render(window, player.player_rect)
+    background.render(window, player.player_rect, player.player_velocity)
     player.render(window)
    
 
