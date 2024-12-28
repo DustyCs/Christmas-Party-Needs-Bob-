@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "House1.tsx",
+    "activeFile": "FirstStage Map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -46,10 +46,10 @@
     ],
     "project": "first_stage.tiled-project",
     "recentFiles": [
-        "FirstStage Map.tmx",
-        "FieldsTileset.tsx",
-        "Borders.tsx",
         "House1.tsx",
+        "Borders.tsx",
+        "FieldsTileset.tsx",
+        "FirstStage Map.tmx",
         "Houses.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

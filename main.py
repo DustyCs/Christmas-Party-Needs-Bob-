@@ -4,6 +4,7 @@ from pytmx.util_pygame import load_pygame
 
 from classes.player import *
 from classes.background import *
+from utils.visual_test import LineTest
 
 pygame.init()
 
@@ -25,13 +26,9 @@ player.player_rect.x, player.player_rect.y = 600, 235
 stage1_img = pygame.image.load('design/background/Background1.png').convert_alpha()
 background = Background(stage1_img, 300, 75, 2)
  
-bg_house = [(100, 100), 0, 0] # size, x, y
+bg_house = [(240, 180), 140, 400] # size, x, y
 fenced_area = [(50, 50), 0, 0]
 background.objects = [bg_house, fenced_area]
-
-# Tiled Data
-
-# tmx_data = load_pygame('data/tmx/')
 
 # DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
 previous_time = time.time()
@@ -52,12 +49,16 @@ while run:
     window.fill((100, 100, 100))
     background.render(window, player.player_rect) # 
     player.render(window) 
-   
+
+    # print(player.player_rect.x)
+
+    # test collision
+
+    print(pygame.Rect.colliderect(player.player_rect, background.objects_rect[0]))
+
+    # print(player.player_rect.x, player.player_rect.y)
 
     pygame.display.flip()
     clock.tick(FPS)
 
 pygame.quit()
-
-
-

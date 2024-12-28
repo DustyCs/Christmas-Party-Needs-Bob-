@@ -5,5 +5,5 @@ class LineTest():
         pass
 
     @staticmethod
-    def drawLine():
-        pass
+    def drawLine(window, x1, x2, y1, y2):
+        pygame.draw.line(window, (255,0,0), (x1, y1), (x2, y2), 5)
