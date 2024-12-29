@@ -41,9 +41,21 @@ class Player():
         self.player_velocity = self.player_speed * delta_time * FPS   
         
         # A VERY DRY PROBLEM
-
+        # print(self.player_rect.y)
+        
         if (self.collision):
-            self.player_rect.x = self.player_rect.x
+
+            # Clean
+            if self.player_rect.x >= 140:
+                self.player_rect.x += self.player_velocity
+            if self.player_rect.x <= 140:
+                self.player_rect.x -= self.player_velocity
+            if self.player_rect.y >= (400 - 180):
+                self.player_rect.y += self.player_velocity
+            if self.player_rect.y <= (400 - 180):
+                self.player_rect.y -= self.player_velocity
+            # self.knockbackCollision()
+
         else:
             if K_a:
                 self.player_rect.x -= self.player_velocity
@@ -123,6 +135,9 @@ class Player():
       
     def attackAnimation(self):
         pass
+
+    def knockbackCollision(self):
+        self.player_rect.x += self.player_velocity 
 
     def render(self, window):
         window.blit(self.player_image, self.player_rect)

@@ -32,11 +32,38 @@ class Background():
  
         return [objectSurface, object_rect]
 
+    def antiMoveObject(self, object, x, y):
+        if object.x >= x:
+            object.x = x 
+        if object.y >= y:
+            object.y = y
+
+    def objectScroll(self, object, width):
+        object.x -= self.player_offset.x - width
+        object.y -= self.player_offset.y
+
     def drawObjects(self):
         self.object_converted = [self.createObject(x[0][0], x[0][1], x[1], x[2]) for x in self.objects] # whats x?
         self.objects_rect = [ x[1] for x in self.object_converted]
 
-        # edit rects?
+        print(self.objects_rect[0])
+
+        # clean the -240
+
+        self.objectScroll(self.objects_rect[0], 240)
+
+        # self.objects_rect[0].x -= self.player_offset.x - 240
+        # self.objects_rect[0].y -= self.player_offset.y
+        
+
+        # clean make it so it can be used on other objects
+
+        self.antiMoveObject(self.objects_rect[0], 140, 400)
+
+        # if self.objects_rect[0].x >= 140:
+        #     self.objects_rect[0].x = 140 
+        # if self.objects_rect[0].y >= 400:
+        #     self.objects_rect[0].y = 400 
 
         self.object_converted[0][0].fill((0, 0, 0))
         # print(self.objects_rect[0].x, self.objects_rect[0].y)
@@ -49,9 +76,7 @@ class Background():
         player_posx = self.background_rect.x - self.player_x
         player_posy = self.background_rect.y - self.player_y
 
-        # objects
-        self.drawObjects()
-
+      
         # collision
 
         # Scroll
@@ -74,14 +99,19 @@ class Background():
         # Background objects 
         # Need cleaning
 
-        self.objects_rect[0].x -= self.player_offset.x - 240
-        self.objects_rect[0].y -= self.player_offset.y
+        # self.objects_rect[0].x -= self.player_offset.x - 240
+        # self.objects_rect[0].y -= self.player_offset.y
         
-        if self.objects_rect[0].x >= 140:
-            self.objects_rect[0].x = 140  # fixed... I think
-            print("true")
+        # if self.objects_rect[0].x >= 140:
+        #     self.objects_rect[0].x = 140 
+        # if self.objects_rect[0].y >= 400:
+        #     self.objects_rect[0].y = 400 
 
-        print(self.objects_rect[0].x)
+        # objects
+        self.drawObjects()
+
+
+        # print(self.objects_rect[0].x)
 
         window.blit(self.object_converted[0][0], (self.objects_rect[0].x, self.objects_rect[0].y))
         pygame.draw.rect(window, (0, 255, 0), self.objects_rect[0]) 

@@ -54,8 +54,12 @@ while run:
 
     # test collision
 
-    print(pygame.Rect.colliderect(player.player_rect, background.objects_rect[0]))
+    # print(pygame.Rect.colliderect(player.player_rect, background.objects_rect[0]))
 
+    if (pygame.Rect.colliderect(player.player_rect, background.objects_rect[0])):
+        player.collision = True
+    else:
+        player.collision = False
     # print(player.player_rect.x, player.player_rect.y)
 
     pygame.display.flip()
