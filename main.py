@@ -27,7 +27,7 @@ stage1_img = pygame.image.load('design/background/Background1.png').convert_alph
 background = Background(stage1_img, 300, 75, 2)
  
 bg_house = [(240, 180), 140, 400] # size, x, y
-fenced_area = [(50, 50), 0, 0]
+fenced_area = [(240, 180), 550, 790]
 background.objects = [bg_house, fenced_area]
 
 # DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
@@ -47,7 +47,7 @@ while run:
     player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, FPS)
 
     window.fill((100, 100, 100))
-    background.render(window, player.player_rect) # 
+    background.render(window, player.player_rect) 
     player.render(window) 
 
     # print(player.player_rect.x)
@@ -56,10 +56,28 @@ while run:
 
     # print(pygame.Rect.colliderect(player.player_rect, background.objects_rect[0]))
 
-    if (pygame.Rect.colliderect(player.player_rect, background.objects_rect[0])):
-        player.collision = True
-    else:
-        player.collision = False
+    # if player.player_rect.colliderect(background.objects_rect[0]):
+    #     player.collision = True
+    # else:
+    #     player.collision = False
+
+    # print(background.objects_rect[0])
+
+    # doesnt work since it becomes false immediately
+  
+    for x in background.objects_rect:
+        if player.player_rect.colliderect(x):
+            player.collision = True
+
+    # print(player.collision)
+
+
+    # cleaned
+
+    # if (pygame.Rect.colliderect(player.player_rect, background.objects_rect[0])):
+    #     player.collision = True
+    # else:
+    #     player.collision = False
     # print(player.player_rect.x, player.player_rect.y)
 
     pygame.display.flip()

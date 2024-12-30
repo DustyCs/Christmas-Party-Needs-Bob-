@@ -46,27 +46,31 @@ class Background():
         self.object_converted = [self.createObject(x[0][0], x[0][1], x[1], x[2]) for x in self.objects] # whats x?
         self.objects_rect = [ x[1] for x in self.object_converted]
 
-        print(self.objects_rect[0])
+        # for x in range(len(self.objects_rect)):
+        #     self.objectScroll(self.objects_rect[x], self.objects[x][0][0]) # width
+        #     self.antiMoveObject(self.objects_rect[x], self.objects[x][1], self.objects[x][2]) # x, y
 
-        # clean the -240
+        # self.objectScroll(self.objects_rect[1], 500)
+        # self.antiMoveObject(self.objects_rect[1], 200, 700)
+
+        self.objects_rect[1].x -= self.player_offset.x
+        self.objects_rect[1].y -= self.player_offset.y
+
+        print(self.objects_rect[1].x)
+
+        if self.objects_rect[1].x >= 240:
+            self.objects_rect[1].x = 240 
+            print("rtue")
+
+        # if self.objects_rect[1].y >= 700:
+        #     self.objects_rect[1].y = 700
 
         self.objectScroll(self.objects_rect[0], 240)
-
-        # self.objects_rect[0].x -= self.player_offset.x - 240
-        # self.objects_rect[0].y -= self.player_offset.y
-        
-
-        # clean make it so it can be used on other objects
-
         self.antiMoveObject(self.objects_rect[0], 140, 400)
 
-        # if self.objects_rect[0].x >= 140:
-        #     self.objects_rect[0].x = 140 
-        # if self.objects_rect[0].y >= 400:
-        #     self.objects_rect[0].y = 400 
+        self.object_converted[1][0].fill((0, 0, 0))
 
-        self.object_converted[0][0].fill((0, 0, 0))
-        # print(self.objects_rect[0].x, self.objects_rect[0].y)
+        # print(self.objects_rect[1])
 
     def render(self, window, player_offset):
         self.player_offset = player_offset # add for collisions
@@ -81,6 +85,7 @@ class Background():
 
         # Scroll
 
+            # Background Scroll
         if not ((player_posx >= 0 or player_posx <= -1280) or (player_posy >= 0 or player_posy <= -720)):
             window.blit(self.background_image, (self.background_rect.x - self.player_x, self.background_rect.y - self.player_y))
             self.lastPos = self.background_rect.x - self.player_x
@@ -96,30 +101,20 @@ class Background():
             # print("true")
 
 
-        # Background objects 
-        # Need cleaning
-
-        # self.objects_rect[0].x -= self.player_offset.x - 240
-        # self.objects_rect[0].y -= self.player_offset.y
-        
-        # if self.objects_rect[0].x >= 140:
-        #     self.objects_rect[0].x = 140 
-        # if self.objects_rect[0].y >= 400:
-        #     self.objects_rect[0].y = 400 
-
-        # objects
+        # Objects Scroll
         self.drawObjects()
 
 
-        # print(self.objects_rect[0].x)
 
-        window.blit(self.object_converted[0][0], (self.objects_rect[0].x, self.objects_rect[0].y))
+        # window.blit(self.object_converted[0][0], (self.objects_rect[0].x, self.objects_rect[0].y))
+
+        # test
+
+        window.blit(self.object_converted[1][0], (self.objects_rect[1].x, self.objects_rect[1].y))
         pygame.draw.rect(window, (0, 255, 0), self.objects_rect[0]) 
-
+        pygame.draw.rect(window, (0, 255, 0), self.objects_rect[1]) 
         # issue with rect moving after 140, 400 (x, y)
 
         # Rect(x, y, width, height)
         # Player
         pygame.draw.rect(window, (0, 255, 0), self.player_offset)
-
-

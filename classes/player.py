@@ -42,18 +42,21 @@ class Player():
         
         # A VERY DRY PROBLEM
         # print(self.player_rect.y)
-        
+
         if (self.collision):
 
+            self.objectCollision(140, 400, 180) # x, y, height
+
             # Clean
-            if self.player_rect.x >= 140:
-                self.player_rect.x += self.player_velocity
-            if self.player_rect.x <= 140:
-                self.player_rect.x -= self.player_velocity
-            if self.player_rect.y >= (400 - 180):
-                self.player_rect.y += self.player_velocity
-            if self.player_rect.y <= (400 - 180):
-                self.player_rect.y -= self.player_velocity
+
+            # if self.player_rect.x >= 140:
+            #     self.player_rect.x += self.player_velocity
+            # if self.player_rect.x <= 140:
+            #     self.player_rect.x -= self.player_velocity
+            # if self.player_rect.y >= (400 - 180):
+            #     self.player_rect.y += self.player_velocity
+            # if self.player_rect.y <= (400 - 180):
+            #     self.player_rect.y -= self.player_velocity
             # self.knockbackCollision()
 
         else:
@@ -137,7 +140,18 @@ class Player():
         pass
 
     def knockbackCollision(self):
-        self.player_rect.x += self.player_velocity 
+        self.player_rect.x += self.player_velocity # only one true to eject the player until its false
+
+    def objectCollision(self, object_x, object_y, object_height):
+        if self.player_rect.x >= object_x:
+            self.player_rect.x += self.player_velocity
+        if self.player_rect.x <= object_x:
+            self.player_rect.x -= self.player_velocity
+        if self.player_rect.y >= (object_y - object_height):
+            self.player_rect.y += self.player_velocity
+        if self.player_rect.y <= (object_y - object_height):
+            self.player_rect.y -= self.player_velocity
+        self.collision = False
 
     def render(self, window):
         window.blit(self.player_image, self.player_rect)
