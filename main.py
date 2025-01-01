@@ -13,25 +13,32 @@ clock = pygame.time.Clock()
 FPS = 30
 run = True
 
+
+# Sprites
+
+all_sprite = pygame.sprite.Group()
+
 # Player
 
-player = Player() 
-player.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
-player.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
-player.player_image = player.getImage(player.player_sprite_idle, player.frame_x, player.frame_y, 64, 64, 2, (0,0,0))
-player.player_rect = player.player_image.get_rect()
-player.player_rect.x, player.player_rect.y = 600, 235
+player = Player(all_sprite) 
+# player.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
+# player.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
+# player.player_image = player.getImage(player.player_sprite_idle, player.frame_x, player.frame_y, 64, 64, 2, (0,0,0))
+# player.player_rect = player.player_image.get_rect()
+# player.player_rect.x, player.player_rect.y = 600, 235
 
 # Background
 stage1_img = pygame.image.load('design/background/Background1.png').convert_alpha()
-background = Background(stage1_img, 300, 75, 2)
+background = Background(stage1_img, 0, 0, 2)
  
 bg_house = [(240, 180), 140, 400] # size, x, y
-fenced_area = [(240, 180), 550, 790]
+fenced_area = [(650, 360), 240, 560]
 background.objects = [bg_house, fenced_area]
 
 # DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
 previous_time = time.time()
+
+
 
 while run:
     # DTimer
@@ -45,40 +52,13 @@ while run:
     keys = pygame.key.get_pressed()
 
     player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, FPS)
+    background.render(window, player.rect) 
 
-    window.fill((100, 100, 100))
-    background.render(window, player.player_rect) 
-    player.render(window) 
+    # for x in background.objects_rect:
+    #     if player.player_rect.colliderect(x):
+    #         player.collision = True
 
-    # print(player.player_rect.x)
-
-    # test collision
-
-    # print(pygame.Rect.colliderect(player.player_rect, background.objects_rect[0]))
-
-    # if player.player_rect.colliderect(background.objects_rect[0]):
-    #     player.collision = True
-    # else:
-    #     player.collision = False
-
-    # print(background.objects_rect[0])
-
-    # doesnt work since it becomes false immediately
-  
-    for x in background.objects_rect:
-        if player.player_rect.colliderect(x):
-            player.collision = True
-
-    # print(player.collision)
-
-
-    # cleaned
-
-    # if (pygame.Rect.colliderect(player.player_rect, background.objects_rect[0])):
-    #     player.collision = True
-    # else:
-    #     player.collision = False
-    # print(player.player_rect.x, player.player_rect.y)
+    all_sprite.draw(window)
 
     pygame.display.flip()
     clock.tick(FPS)
