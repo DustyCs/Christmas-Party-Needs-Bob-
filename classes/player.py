@@ -18,15 +18,15 @@ class Player(pygame.sprite.Sprite):
 
     last_idle = time.time()
 
-    def __init__(self, groups, collision_sprites):
+    def __init__(self, pos, groups, collision_sprites):
         super().__init__(groups)
         self.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
         self.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
-        self.image_scale = 1
+        self.image_scale = 2
         self.image_size = 64
         self.image = self.getImage(self.player_sprite_idle, self.frame_x, self.frame_y, self.image_size, self.image_size, self.image_scale, (0,0,0))
-        self.rect = self.image.get_rect()
-        self.rect.x, self.rect.y = 600, 235
+        self.rect = self.image.get_rect(center=pos)
+        self.hitbox_rect = self.rect.inflate(0, -40)
         self.collision_sprites = collision_sprites
         self.direction = pygame.Vector2()
 
@@ -34,14 +34,18 @@ class Player(pygame.sprite.Sprite):
         self.direction.x = int(K_d - int(K_a))
         self.direction.y = int(K_s - int(K_w))
 
-        print(self.direction)
+        # print(self.direction)
 
         if self.movement_state == "idle":
             self.idleAnimation()
         if self.movement_state == "run":
             self.runAnimation(self.animation_direction)
         self.player_velocity = self.player_speed * delta_time * FPS   
-        self.rect.center += self.direction * self.player_velocity
+
+        self.hitbox_rect.x += self.direction.x * self.player_velocity
+        self.hitbox_rect.y += self.direction.y * self.player_velocity
+
+        self.rect.center = self.hitbox_rect.center
 
         if K_a:
             self.movement_state = "run"
@@ -71,15 +75,15 @@ class Player(pygame.sprite.Sprite):
             pass
     
     def collision(self, direction):
-        print(direction)
+        # print(direction)
         for sprite in self.collision_sprites:
             if sprite.rect.colliderect(self.rect):
                 if direction == "horizontal":
-                    if self.direction.x > 0: self.rect.right = sprite.rect.left
-                    if self.direction.x < 0: self.rect.left = sprite.rect.right
+                    if self.direction.x > 0: self.hitbox_rect.right = sprite.rect.left
+                    if self.direction.x < 0: self.hitbox_rect.left = sprite.rect.right
                 else:
-                    if self.direction.y < 0: self.rect.top = sprite.rect.bottom
-                    if self.direction.y > 0: self.rect.bottom = sprite.rect.top
+                    if self.direction.y < 0: self.hitbox_rect.top = sprite.rect.bottom
+                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.rect.top
 
     def attack(self): pass
         

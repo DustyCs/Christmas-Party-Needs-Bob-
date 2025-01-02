@@ -20,28 +20,29 @@ run = True
 all_sprites = AllSprites()
 collision_sprites = pygame.sprite.Group()
 
+# Player
+
+player = Player((600, 235), all_sprites, collision_sprites) 
+
 # Load Map
+
 
 def setup():
     map = load_pygame(os.path.join('design', 'tiled', 'FirstStage Map.tmx'))
-    tile_size = 32
+    scale = 2
+
+    tile_size = 32 * scale
 
     for x, y, image in map.get_layer_by_name('Ground').tiles():
-        BackgroundSprite((x * tile_size , y * tile_size), image, all_sprites)
+        BackgroundSprite((x * tile_size , y * tile_size), image, all_sprites, scale)
 
     for obj in map.get_layer_by_name('Collision'):
-        CollisionSprite((obj.x, obj.y), obj.image, (all_sprites, collision_sprites))
+        CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (all_sprites, collision_sprites), scale)
 
 setup()
 
-# Player
-
-player = Player(all_sprites, collision_sprites) 
-
 # DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
 previous_time = time.time()
-
-
 
 while run:
     # DTimer
@@ -58,9 +59,9 @@ while run:
     # for x in background.objects_rect:
     #     if player.player_rect.colliderect(x):
     #         player.collision = True
-  
-    all_sprites.draw()
-    # pygame.draw.rect(window, (0, 255, 255), player.rect)
+    window.fill((255, 255, 255))
+    all_sprites.draw(player.rect.center)
+    pygame.draw.rect(window, (0, 255, 255), player.hitbox_rect)
 
     pygame.display.flip()
     clock.tick(FPS)
