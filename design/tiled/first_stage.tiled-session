@@ -18,11 +18,11 @@
             "scaleInEditor": 1
         },
         "FirstStage Map.tmx": {
-            "scale": 0.75,
+            "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 429.3333333333333,
-                "y": 288.6666666666667
+                "x": 605,
+                "y": 427
             }
         },
         "House1.tsx": {

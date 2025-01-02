@@ -1,10 +1,11 @@
-import pygame, time # type: ignore - VC can't detect
+import pygame, time, os # type: ignore - VC can't detect
 import _asyncio
 from pytmx.util_pygame import load_pygame
 
 from classes.player import *
 from classes.background import *
 from utils.visual_test import LineTest
+from classes.groups import AllSprites
 
 pygame.init()
 
@@ -16,24 +17,26 @@ run = True
 
 # Sprites
 
-all_sprite = pygame.sprite.Group()
+all_sprites = AllSprites()
+collision_sprites = pygame.sprite.Group()
+
+# Load Map
+
+def setup():
+    map = load_pygame(os.path.join('design', 'tiled', 'FirstStage Map.tmx'))
+    tile_size = 32
+
+    for x, y, image in map.get_layer_by_name('Ground').tiles():
+        BackgroundSprite((x * tile_size , y * tile_size), image, all_sprites)
+
+    for obj in map.get_layer_by_name('Collision'):
+        CollisionSprite((obj.x, obj.y), obj.image, (all_sprites, collision_sprites))
+
+setup()
 
 # Player
 
-player = Player(all_sprite) 
-# player.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
-# player.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
-# player.player_image = player.getImage(player.player_sprite_idle, player.frame_x, player.frame_y, 64, 64, 2, (0,0,0))
-# player.player_rect = player.player_image.get_rect()
-# player.player_rect.x, player.player_rect.y = 600, 235
-
-# Background
-stage1_img = pygame.image.load('design/background/Background1.png').convert_alpha()
-background = Background(stage1_img, 0, 0, 2)
- 
-bg_house = [(240, 180), 140, 400] # size, x, y
-fenced_area = [(650, 360), 240, 560]
-background.objects = [bg_house, fenced_area]
+player = Player(all_sprites, collision_sprites) 
 
 # DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
 previous_time = time.time()
@@ -50,15 +53,14 @@ while run:
             run = False
 
     keys = pygame.key.get_pressed()
-
     player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, FPS)
-    background.render(window, player.rect) 
 
     # for x in background.objects_rect:
     #     if player.player_rect.colliderect(x):
     #         player.collision = True
-
-    all_sprite.draw(window)
+  
+    all_sprites.draw()
+    # pygame.draw.rect(window, (0, 255, 255), player.rect)
 
     pygame.display.flip()
     clock.tick(FPS)
