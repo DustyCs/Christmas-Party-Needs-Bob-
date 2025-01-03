@@ -25,16 +25,17 @@ class Player(pygame.sprite.Sprite):
         self.image_scale = 2
         self.image_size = 64
         self.image = self.getImage(self.player_sprite_idle, self.frame_x, self.frame_y, self.image_size, self.image_size, self.image_scale, (0,0,0))
-        self.rect = self.image.get_rect(center=pos)
-        self.hitbox_rect = self.rect.inflate(0, -40)
+        self.rect = self.image.get_frect(center=pos)
+        self.hitbox_rect = self.rect.inflate(-60, -60)
         self.collision_sprites = collision_sprites
         self.direction = pygame.Vector2()
 
     def movement(self, K_w, K_a, K_s, K_d, delta_time, FPS):
         self.direction.x = int(K_d - int(K_a))
         self.direction.y = int(K_s - int(K_w))
-
         # print(self.direction)
+
+        moving = True
 
         if self.movement_state == "idle":
             self.idleAnimation()
@@ -42,30 +43,40 @@ class Player(pygame.sprite.Sprite):
             self.runAnimation(self.animation_direction)
         self.player_velocity = self.player_speed * delta_time * FPS   
 
-        self.hitbox_rect.x += self.direction.x * self.player_velocity
-        self.hitbox_rect.y += self.direction.y * self.player_velocity
+        if self.direction.y == 0 and moving:
+            print("runnn")
+            moving = False
+            self.hitbox_rect.x += self.direction.x * self.player_velocity
+            self.collision('horizontal')
+        print(moving)
+        if not self.direction.x > 0 or not self.direction.x < 0:
+            self.hitbox_rect.y += self.direction.y * self.player_velocity
+            self.collision('vertical')
+
+        # self.hitbox_rect.x += self.direction.x * self.player_velocity
+        #self.hitbox_rect.y += self.direction.y * self.player_velocity
 
         self.rect.center = self.hitbox_rect.center
-
+    
         if K_a:
             self.movement_state = "run"
             self.animation_direction = "left"
-            self.collision('horizontal')
+            # self.collision('horizontal')
             self.frame_x = int(self.frame_x) + 1
         elif K_d:
             self.movement_state = "run"
             self.animation_direction = "right"
-            self.collision('horizontal')
+            # self.collision('horizontal')
             self.frame_x = int(self.frame_x) + 1
         elif K_w:
             self.movement_state = "run"
             self.animation_direction = "up"
-            self.collision('vertical')
+            # self.collision('vertical')
             self.frame_x = int(self.frame_x) + 1
         elif K_s:
             self.movement_state = "run"
             self.animation_direction = "down"
-            self.collision('vertical')
+            # self.collision('vertical')
             self.frame_x = int(self.frame_x) + 1
         else:
             self.movement_state = "idle"
@@ -75,15 +86,18 @@ class Player(pygame.sprite.Sprite):
             pass
     
     def collision(self, direction):
-        # print(direction)
         for sprite in self.collision_sprites:
-            if sprite.rect.colliderect(self.rect):
+            if sprite.rect.colliderect(self.hitbox_rect):
                 if direction == "horizontal":
-                    if self.direction.x > 0: self.hitbox_rect.right = sprite.rect.left
-                    if self.direction.x < 0: self.hitbox_rect.left = sprite.rect.right
-                else:
-                    if self.direction.y < 0: self.hitbox_rect.top = sprite.rect.bottom
-                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.rect.top
+                    if self.direction.x > 0 and abs(self.hitbox_rect.right - sprite.rect.left) < sprite.rect[2]:  
+                        self.hitbox_rect.right = sprite.rect.left
+                    if self.direction.x < 0 and abs(self.hitbox_rect.left - sprite.rect.right) < sprite.rect[2]: 
+                        self.hitbox_rect.left = sprite.rect.right
+                if direction == 'vertical':
+                    if self.direction.y > 0 and abs(self.hitbox_rect.bottom - sprite.rect.top) < sprite.rect[3]: 
+                        self.hitbox_rect.bottom = sprite.rect.top
+                    if self.direction.y < 0 and abs(self.hitbox_rect.top - sprite.rect.bottom) < sprite.rect[3]: 
+                        self.hitbox_rect.top = sprite.rect.bottom
 
     def attack(self): pass
         
@@ -132,6 +146,3 @@ class Player(pygame.sprite.Sprite):
       
     def attackAnimation(self):
         pass
-
-    def knockbackCollision(self):
-        self.rect.x += self.player_velocity # only one true to eject the player until its false

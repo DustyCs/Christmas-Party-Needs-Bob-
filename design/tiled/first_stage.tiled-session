@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "FirstStage Map.tmx",
+    "activeFile": "World Map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -13,17 +13,33 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Fence Area.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Fenced Area.tmx": {
+            "scale": 1.818359375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 300.2706766917293,
+                "y": 240.32653061224488
+            }
+        },
         "FieldsTileset.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "FirstStage Map.tmx": {
             "scale": 0.5,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 605,
-                "y": 427
+                "x": 641,
+                "y": 367
             }
+        },
+        "Horizontal Border.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "House1.tsx": {
             "scaleInDock": 1,
@@ -32,29 +48,64 @@
         "Houses.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "Wall.tmx": {
+            "scale": 2.671875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 15.906432748538013,
+                "y": 160
+            }
+        },
+        "Wall.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "World Map.tmx": {
+            "expandedObjectLayers": [
+                2,
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1600.5,
+                "y": 1600.5
+            }
         }
     },
-    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/main_source_craftpix/craftpix-net-504452-free-village-pixel-tileset-for-top-down-defense/2 Objects/7 House",
-    "map.height": 23,
+    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/tiled",
+    "map.height": 1,
     "map.lastUsedFormat": "tmx",
-    "map.width": 40,
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 10,
     "openFiles": [
         "FirstStage Map.tmx",
         "FieldsTileset.tsx",
-        "Borders.tsx",
-        "House1.tsx"
+        "World Map.tmx",
+        "Fence Area.tsx",
+        "Wall.tmx",
+        "Wall.tsx",
+        "Horizontal Border.tsx"
     ],
     "project": "first_stage.tiled-project",
     "recentFiles": [
+        "FirstStage Map.tmx",
+        "FieldsTileset.tsx",
+        "Horizontal Border.tsx",
+        "Wall.tsx",
+        "Wall.tmx",
+        "Fence Area.tsx",
+        "World Map.tmx",
+        "Fenced Area.tmx",
         "House1.tsx",
         "Borders.tsx",
-        "FieldsTileset.tsx",
-        "FirstStage Map.tmx",
         "Houses.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 112,
-        "width": 116
+        "height": 32,
+        "width": 320
     }
 }
