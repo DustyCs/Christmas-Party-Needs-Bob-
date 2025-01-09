@@ -1,0 +1,129 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "World Map.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "Barrels.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Borders.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Fence Area.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Fenced Area.tmx": {
+            "scale": 1.818359375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 300.2706766917293,
+                "y": 240.32653061224488
+            }
+        },
+        "FieldsTileset.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "FirstStage Map.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 641,
+                "y": 367
+            }
+        },
+        "Horizontal Border.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "House1.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Houses.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tents.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Wall.tmx": {
+            "scale": 2.671875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 15.90643274853801,
+                "y": 160
+            }
+        },
+        "Wall.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "World Map.tmx": {
+            "expandedObjectLayers": [
+                2,
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 886,
+                "y": 1343
+            }
+        }
+    },
+    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/main_source_craftpix/craftpix-net-504452-free-village-pixel-tileset-for-top-down-defense/2 Objects/6 Tent",
+    "map.height": 1,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 10,
+    "openFiles": [
+        "World Map.tmx",
+        "Fence Area.tsx",
+        "Wall.tmx",
+        "Wall.tsx",
+        "Horizontal Border.tsx",
+        "Barrels.tsx",
+        "House1.tsx",
+        "Tents.tsx"
+    ],
+    "project": "first_stage.tiled-project",
+    "recentFiles": [
+        "Tents.tsx",
+        "House1.tsx",
+        "Barrels.tsx",
+        "Horizontal Border.tsx",
+        "Wall.tsx",
+        "Wall.tmx",
+        "Fence Area.tsx",
+        "World Map.tmx",
+        "FieldsTileset.tsx",
+        "FirstStage Map.tmx",
+        "Fenced Area.tmx",
+        "Borders.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 320
+    },
+    "tileset.type": 1
+}

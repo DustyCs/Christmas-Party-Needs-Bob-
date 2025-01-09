@@ -2,15 +2,14 @@ import pygame # type: ignore
 import time
 from utils.decorators import *
 
-class Player():
-    player_image = None
-    player_sprite_idle = None
-    player_sprite_run = None
-    player_rect = None
+class Player(pygame.sprite.Sprite):
     player_speed = 10
+    player_velocity = None
+
+    attack_key = None
 
     movement_state = "idle"
-    direction = None
+    animation_direction = None
 
     animation_speed= 0.2
     animation_frame = 0
@@ -19,56 +18,73 @@ class Player():
 
     last_idle = time.time()
 
-    def __init__(self):
-        pass
-
-    def testPrint(self): # The function you use when ya don't know what's up with the properties and methods
-        print(self.player_rect) 
+    def __init__(self, pos, groups, collision_sprites):
+        super().__init__(groups)
+        self.player_sprite_idle = pygame.image.load('design/Slime/Idle/Slime1_Idle_full.png').convert_alpha()
+        self.player_sprite_run = pygame.image.load('design/Slime/Run/Slime1_Run_full.png').convert_alpha()
+        self.image_scale = 2
+        self.image_size = 64
+        self.image = self.getImage(self.player_sprite_idle, self.frame_x, self.frame_y, self.image_size, self.image_size, self.image_scale, (0,0,0))
+        self.rect = self.image.get_frect(center=pos)
+        self.hitbox_rect = self.rect.inflate(-60, -60)
+        self.collision_sprites = collision_sprites
+        self.direction = pygame.Vector2()
 
     def movement(self, K_w, K_a, K_s, K_d, delta_time, FPS):
-        # print(self.player_speed * delta_time * FPS)
-        # print(self.last_idle)
-        """ 
-          
-        lorem ipsum here        
-
-        """
+        self.direction.x = int(K_d - int(K_a))
+        self.direction.y = int(K_s - int(K_w))
+        moving = True
 
         if self.movement_state == "idle":
             self.idleAnimation()
         if self.movement_state == "run":
-            self.runAnimation(self.direction)
+            self.runAnimation(self.animation_direction)
+        self.player_velocity = self.player_speed * delta_time * FPS   
 
-        player_velocity = self.player_speed * delta_time * FPS   
-        
-        # A VERY DRY PROBLEM
+        if self.direction.y == 0 and moving:
+            moving = False
+            self.hitbox_rect.x += self.direction.x * self.player_velocity
+            self.collision('horizontal')
+        if not self.direction.x > 0 or not self.direction.x < 0:
+            self.hitbox_rect.y += self.direction.y * self.player_velocity
+            self.collision('vertical')
 
+        self.rect.center = self.hitbox_rect.center
+    
         if K_a:
-            self.player_rect.x -= player_velocity
             self.movement_state = "run"
-            self.direction = "left"
+            self.animation_direction = "left"
             self.frame_x = int(self.frame_x) + 1
         elif K_d:
-            self.player_rect.x += player_velocity
             self.movement_state = "run"
-            self.direction = "right"
+            self.animation_direction = "right"
             self.frame_x = int(self.frame_x) + 1
-            # self.frame_x = self.convertNextFrame(self.frame_x) # need to clean this
-            print(self.frame_x)
         elif K_w:
-            self.player_rect.y -= player_velocity
             self.movement_state = "run"
-            self.direction = "up"
+            self.animation_direction = "up"
             self.frame_x = int(self.frame_x) + 1
-
         elif K_s:
-            self.player_rect.y += player_velocity
             self.movement_state = "run"
-            self.direction = "down"
+            self.animation_direction = "down"
             self.frame_x = int(self.frame_x) + 1
-
         else:
             self.movement_state = "idle"
+    
+    def collision(self, direction):
+        for sprite in self.collision_sprites:
+            if sprite.rect.colliderect(self.hitbox_rect):
+                if direction == "horizontal":
+                    if self.direction.x > 0 and abs(self.hitbox_rect.right - sprite.rect.left) < sprite.rect[2]:  
+                        self.hitbox_rect.right = sprite.rect.left
+                    if self.direction.x < 0 and abs(self.hitbox_rect.left - sprite.rect.right) < sprite.rect[2]: 
+                        self.hitbox_rect.left = sprite.rect.right
+                if direction == 'vertical':
+                    if self.direction.y > 0 and abs(self.hitbox_rect.bottom - sprite.rect.top) < sprite.rect[3]: 
+                        self.hitbox_rect.bottom = sprite.rect.top
+                    if self.direction.y < 0 and abs(self.hitbox_rect.top - sprite.rect.bottom) < sprite.rect[3]: 
+                        self.hitbox_rect.top = sprite.rect.bottom
+
+    def attack(self): pass
         
     def getImage(self, sheet, frame_x, frame_y, width, height, scale, color):
         image = pygame.Surface((width, height)).convert_alpha()
@@ -86,8 +102,7 @@ class Player():
         self.frame_x += self.animation_speed 
         converted_frame = int(self.frame_x) 
         
-        self.player_image = self.getImage(self.player_sprite_idle, converted_frame, self.frame_y, 64, 64, 2, (0,0,0))
-        # print(self.frame_x, self.frame_y)
+        self.image = self.getImage(self.player_sprite_idle, converted_frame, self.frame_y, self.image_size, self.image_size, self.image_scale, (0,0,0))
 
         if self.frame_y <= 3 and converted_frame >= 5:
             self.frame_y += 1
@@ -97,7 +112,7 @@ class Player():
             self.frame_x = 0
 
     def runAnimation(self, direction):
-        self.player_image = self.getImage(self.player_sprite_run, self.frame_x, self.frame_y, 64, 64, 2, (0,0,0))
+        self.image = self.getImage(self.player_sprite_run, self.frame_x, self.frame_y, self.image_size, self.image_size, self.image_scale, (0,0,0))
         converted_frame = int(self.frame_x) 
         self.frame_y = 3
      
@@ -114,11 +129,5 @@ class Player():
             case "down":
                 self.frame_y = 0
       
-
-    def render(self, window):
-        window.blit(self.player_image, self.player_rect)
-
-
-# do the same thing before maybe?
-# increment frame key every key pressed?
-# then reset to idle when no key is pressed - sounds good
+    def attackAnimation(self):
+        pass
