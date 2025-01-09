@@ -33,8 +33,6 @@ class Player(pygame.sprite.Sprite):
     def movement(self, K_w, K_a, K_s, K_d, delta_time, FPS):
         self.direction.x = int(K_d - int(K_a))
         self.direction.y = int(K_s - int(K_w))
-        # print(self.direction)
-
         moving = True
 
         if self.movement_state == "idle":
@@ -44,46 +42,33 @@ class Player(pygame.sprite.Sprite):
         self.player_velocity = self.player_speed * delta_time * FPS   
 
         if self.direction.y == 0 and moving:
-            print("runnn")
             moving = False
             self.hitbox_rect.x += self.direction.x * self.player_velocity
             self.collision('horizontal')
-        print(moving)
         if not self.direction.x > 0 or not self.direction.x < 0:
             self.hitbox_rect.y += self.direction.y * self.player_velocity
             self.collision('vertical')
-
-        # self.hitbox_rect.x += self.direction.x * self.player_velocity
-        #self.hitbox_rect.y += self.direction.y * self.player_velocity
 
         self.rect.center = self.hitbox_rect.center
     
         if K_a:
             self.movement_state = "run"
             self.animation_direction = "left"
-            # self.collision('horizontal')
             self.frame_x = int(self.frame_x) + 1
         elif K_d:
             self.movement_state = "run"
             self.animation_direction = "right"
-            # self.collision('horizontal')
             self.frame_x = int(self.frame_x) + 1
         elif K_w:
             self.movement_state = "run"
             self.animation_direction = "up"
-            # self.collision('vertical')
             self.frame_x = int(self.frame_x) + 1
         elif K_s:
             self.movement_state = "run"
             self.animation_direction = "down"
-            # self.collision('vertical')
             self.frame_x = int(self.frame_x) + 1
         else:
             self.movement_state = "idle"
-
-
-        if self.attack_key:
-            pass
     
     def collision(self, direction):
         for sprite in self.collision_sprites:

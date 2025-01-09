@@ -9,11 +9,18 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "Barrels.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Borders.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "Fence Area.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -26,6 +33,7 @@
             }
         },
         "FieldsTileset.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -38,10 +46,12 @@
             }
         },
         "Horizontal Border.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "House1.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -49,11 +59,16 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Tents.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Wall.tmx": {
             "scale": 2.671875,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 15.906432748538013,
+                "x": 15.90643274853801,
                 "y": 160
             }
         },
@@ -67,45 +82,48 @@
                 3
             ],
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1600.5,
-                "y": 1600.5
+                "x": 886,
+                "y": 1343
             }
         }
     },
-    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/tiled",
+    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/main_source_craftpix/craftpix-net-504452-free-village-pixel-tileset-for-top-down-defense/2 Objects/6 Tent",
     "map.height": 1,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
     "map.tileWidth": 32,
     "map.width": 10,
     "openFiles": [
-        "FirstStage Map.tmx",
-        "FieldsTileset.tsx",
         "World Map.tmx",
         "Fence Area.tsx",
         "Wall.tmx",
         "Wall.tsx",
-        "Horizontal Border.tsx"
+        "Horizontal Border.tsx",
+        "Barrels.tsx",
+        "House1.tsx",
+        "Tents.tsx"
     ],
     "project": "first_stage.tiled-project",
     "recentFiles": [
-        "FirstStage Map.tmx",
-        "FieldsTileset.tsx",
+        "Tents.tsx",
+        "House1.tsx",
+        "Barrels.tsx",
         "Horizontal Border.tsx",
         "Wall.tsx",
         "Wall.tmx",
         "Fence Area.tsx",
         "World Map.tmx",
+        "FieldsTileset.tsx",
+        "FirstStage Map.tmx",
         "Fenced Area.tmx",
-        "House1.tsx",
-        "Borders.tsx",
-        "Houses.tsx"
+        "Borders.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 32,
         "width": 320
-    }
+    },
+    "tileset.type": 1
 }

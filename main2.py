@@ -34,11 +34,13 @@ class Game:
         
         # for obj in map.get_layer_by_name('Objects'):
         #     CollisionSprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
+
+        for obj in map.get_layer_by_name('Tents'):
+            CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (self.all_sprites, self.collision_sprites), scale)
         
         for obj in map.get_layer_by_name('Collisions'):
-            CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (self.all_sprites, self.collision_sprites), scale)
-            # print(obj.name)
-
+            CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (self.all_sprites, self.collision_sprites), scale, obj.name)
+            
         for obj in map.get_layer_by_name('Entities'):
             if obj.name == 'Player':
                 self.player = Player((obj.x * scale, obj.y * scale), self.all_sprites, self.collision_sprites)
@@ -59,6 +61,12 @@ class Game:
 
             keys = pygame.key.get_pressed()
             self.player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, self.FPS)
+
+            # game progression
+            
+            # for sprites in self.collision_sprites:
+            #     if sprites.name == "Gate 2":
+            #         sprites.kill()
 
             # draw
             self.display_surface.fill((255, 255, 255))

@@ -18,6 +18,8 @@ class AllSprites(pygame.sprite.Group):
             for sprite in sorted(layer, key = lambda sprite: sprite.rect.centery):
                 self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
                 
+        
+
         # get player pos
 
         for key in object_sprites:
