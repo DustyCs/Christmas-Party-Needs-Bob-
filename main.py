@@ -17,6 +17,8 @@ class Game:
         self.FPS = 60
         self.main_menu = True
         self.game_intro = cv2.VideoCapture('design/Main Menu/Intro.mp4')
+        self.introFPS = self.game_intro.get(cv2.CAP_PROP_FPS)
+
         self.success, self.video_image = self.game_intro.read()
 
         self.all_sprites = AllSprites()
@@ -86,12 +88,11 @@ class Game:
                 # draw
                 
                 self.all_sprites.draw(self.player.rect.center)
-                
-            else:
-                self.success, self.video_image = self.game_intro.read()
-                print(self.game_intro.read())
 
+            else:
                 self.menu_sprites.draw(self.display_surface) # this would cause a bug if the video is playing
+
+                self.success, self.video_image = self.game_intro.read()
                 if self.success:
                     video_surf = pygame.image.frombuffer(self.video_image.tobytes(), self.video_image.shape[1::-1], "BGR")
                     video_surf = pygame.transform.scale(video_surf, (1280, 720))
@@ -101,7 +102,8 @@ class Game:
 
 
             pygame.display.flip()
-            self.clock.tick(self.FPS)
+            self.clock.tick(self.introFPS if self.success else self.FPS)
+            print(self.clock.get_fps())
 
 
         pygame.quit()
