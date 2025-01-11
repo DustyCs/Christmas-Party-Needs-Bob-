@@ -1,9 +1,9 @@
-# Christmas-Party-Needs-Bob-
+# Changing Name and Project
 
-# Clone first 
-## 1: run git clone https://github.com/DustyCs/Christmas-Party-Needs-Bob-.git in (git bash / cmd)
+# New Name
 
-# File Not Found Error
-1. Check the current directory you are currently on
- - Make sure its on Christmas-Party-Needs-Bob-
+# A Slime's Small Hometown
+## Release date Jan 10
 
+# All Sprites, Images, Background are taken from **Craftpix** 
+## Under their **Free License** (https://craftpix.net/file-licenses/)
