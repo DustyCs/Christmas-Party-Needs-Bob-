@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "World Map.tmx",
+    "activeFile": "MenuButton.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -59,6 +59,30 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Main Menu.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 919.9999999999999,
+                "y": 453.33333333333326
+            }
+        },
+        "MenuButton.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128,
+                "y": 96.66666666666663
+            }
+        },
+        "Player.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Tents.tsx": {
             "dynamicWrapping": true,
             "scaleInDock": 1,
@@ -73,6 +97,7 @@
             }
         },
         "Wall.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -84,17 +109,17 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 886,
-                "y": 1343
+                "x": 1047,
+                "y": 1476
             }
         }
     },
-    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/main_source_craftpix/craftpix-net-504452-free-village-pixel-tileset-for-top-down-defense/2 Objects/6 Tent",
-    "map.height": 1,
+    "last.imagePath": "D:/Group Proj/Christmas-Party-Needs-Bob-/design/main_source_craftpix/craftpix-net-879657-free-slime-mobs-pixel-art-top-down-sprite-pack/PNG/Slime1/Attack",
+    "map.height": 4,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
     "map.tileWidth": 32,
-    "map.width": 10,
+    "map.width": 5,
     "openFiles": [
         "World Map.tmx",
         "Fence Area.tsx",
@@ -103,27 +128,30 @@
         "Horizontal Border.tsx",
         "Barrels.tsx",
         "House1.tsx",
-        "Tents.tsx"
+        "Tents.tsx",
+        "Main Menu.tmx",
+        "Player.tsx",
+        "MenuButton.tmx"
     ],
     "project": "first_stage.tiled-project",
     "recentFiles": [
-        "Tents.tsx",
-        "House1.tsx",
-        "Barrels.tsx",
-        "Horizontal Border.tsx",
-        "Wall.tsx",
-        "Wall.tmx",
-        "Fence Area.tsx",
         "World Map.tmx",
-        "FieldsTileset.tsx",
-        "FirstStage Map.tmx",
-        "Fenced Area.tmx",
-        "Borders.tsx"
+        "Fence Area.tsx",
+        "Wall.tmx",
+        "Wall.tsx",
+        "Horizontal Border.tsx",
+        "Barrels.tsx",
+        "House1.tsx",
+        "Tents.tsx",
+        "Main Menu.tmx",
+        "Player.tsx",
+        "MenuButton.tmx",
+        "FieldsTileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 32,
-        "width": 320
+        "height": 64,
+        "width": 64
     },
-    "tileset.type": 1
+    "tileset.type": 0
 }

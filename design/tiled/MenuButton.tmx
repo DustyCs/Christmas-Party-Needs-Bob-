@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="5" height="4" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" source="Borders.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="5" height="4">
+  <data encoding="csv">
+1,2,3,4,6,
+25,0,0,0,14,
+17,0,0,0,22,
+33,3,2147483651,4,38
+</data>
+ </layer>
+</map>
