@@ -20,10 +20,10 @@ class AllSprites(pygame.sprite.Group):
 
         # get player pos
 
-        for key in object_sprites:
-            # print(type(key))
-            if isinstance(key, Player):
+        # for key in object_sprites:
+        #     # print(type(key))
+        #     if isinstance(key, Player):
             #    print(key.hitbox_rect)
-               pygame.draw.rect(self.display_surface, (0, 255, 255), (100, 100, key.hitbox_rect[2], key.hitbox_rect[3])) # x, y, width height
+            #    pygame.draw.rect(self.display_surface, (0, 255, 255), (100, 100, key.hitbox_rect[2], key.hitbox_rect[3])) # x, y, width height
 
           

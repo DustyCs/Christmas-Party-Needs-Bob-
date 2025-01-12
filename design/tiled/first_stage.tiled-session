@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "MenuButton.tmx",
+    "activeFile": "World Map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -74,8 +74,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 128,
-                "y": 96.66666666666663
+                "x": 80,
+                "y": 63.66666666666667
             }
         },
         "Player.tsx": {
@@ -106,11 +106,11 @@
                 2,
                 3
             ],
-            "scale": 1,
-            "selectedLayer": 2,
+            "scale": 0.33,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 1047,
-                "y": 1476
+                "x": 2275.757575757576,
+                "y": 2154.5454545454545
             }
         }
     },
@@ -135,17 +135,17 @@
     ],
     "project": "first_stage.tiled-project",
     "recentFiles": [
-        "World Map.tmx",
-        "Fence Area.tsx",
-        "Wall.tmx",
-        "Wall.tsx",
-        "Horizontal Border.tsx",
-        "Barrels.tsx",
-        "House1.tsx",
-        "Tents.tsx",
-        "Main Menu.tmx",
-        "Player.tsx",
         "MenuButton.tmx",
+        "Player.tsx",
+        "Main Menu.tmx",
+        "Tents.tsx",
+        "House1.tsx",
+        "Barrels.tsx",
+        "Horizontal Border.tsx",
+        "Wall.tsx",
+        "Wall.tmx",
+        "Fence Area.tsx",
+        "World Map.tmx",
         "FieldsTileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

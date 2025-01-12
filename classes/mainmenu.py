@@ -22,3 +22,7 @@ class MenuButton(pygame.sprite.Sprite):
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect(center=pos)
         self.name = name
+        self.font = pygame.font.SysFont('monospace', 20)
+        self.text = self.font.render(name, True, (255, 255, 255))
+        self.text_rect = self.text.get_rect(center=pos)
+    
