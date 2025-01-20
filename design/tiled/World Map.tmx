@@ -168,7 +168,7 @@
   <object id="100" gid="132" x="448" y="718" width="320" height="32"/>
   <object id="101" name="Final Gate" gid="132" x="750" y="720" width="320" height="32"/>
   <object id="102" gid="132" x="450.667" y="1313.33" width="320" height="32"/>
-  <object id="103" name="Gate 2" gid="132" x="652.667" y="1286" width="320" height="32"/>
+  <object id="103" name="Gate 2" gid="132" x="652.667" y="1232" width="320" height="32"/>
   <object id="104" gid="134" x="678" y="2382.5" width="20" height="22"/>
   <object id="107" gid="134" x="672" y="2371.5" width="20" height="22"/>
   <object id="108" gid="134" x="687.5" y="2372" width="20" height="22"/>

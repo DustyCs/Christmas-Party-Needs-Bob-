@@ -1,0 +1,52 @@
+[
+    {
+        "id": 0,
+        "name": "Christmas Tree",
+        "description": "A large, decorated tree for the holiday season."
+    },
+    {
+        "id": 1,
+        "name": "Ornaments",
+        "description": "Decorative items to hang on the Christmas tree."
+    },
+    {
+        "id": 2,
+        "name": "Lights",
+        "description": "String lights to decorate the tree and house."
+    },
+    {
+        "id": 3,
+        "name": "Tinsel",
+        "description": "Shiny strips of material to add sparkle to the tree."
+    },
+    {
+        "id": 4,
+        "name": "Stockings",
+        "description": "Large socks to hang by the fireplace for gifts."
+    },
+    {
+        "id": 5,
+        "name": "Wreath",
+        "description": "A circular arrangement of flowers and leaves for decoration."
+    },
+    {
+        "id": 6,
+        "name": "Gift Wrap",
+        "description": "Decorative paper for wrapping presents."
+    },
+    {
+        "id": 7,
+        "name": "Bows",
+        "description": "Decorative ribbons to put on gifts."
+    },
+    {
+        "id": 8,
+        "name": "Candles",
+        "description": "Scented candles to create a festive atmosphere."
+    },
+    {
+        "id": 9,
+        "name": "Santa Hat",
+        "description": "A red hat with a white trim, worn by Santa Claus."
+    }
+] 
