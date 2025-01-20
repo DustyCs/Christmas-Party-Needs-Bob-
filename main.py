@@ -131,6 +131,7 @@ class Game:
                 self.all_sprites.draw(self.player.rect.center)
                 # self.display_surface.blit(self.inventory_bar.image, self.inventory_bar.rect)
                 self.inventory_bar.draw()
+                self.inventory_bar.mouse_collision(pygame.mouse.get_pos()) # works hehe
 
                 # Player inventory test
                 if len(self.inventory_bar.item_list) < 3:

@@ -15,6 +15,15 @@ class InventoryBar():
 
         self.create_item_holders()
 
+    def remove_item(self, item_id):
+        self.item_list.remove(item_id)
+    
+    def mouse_collision(self, mouse_pos):
+        for item_holder in self.item_holders:
+            if item_holder.rect.collidepoint(mouse_pos):
+                print(item_holder)
+                return item_holder
+
     def add_item(self, item_id):
         self.item_list.append(item_id)
 
