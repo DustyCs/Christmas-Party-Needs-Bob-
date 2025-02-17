@@ -95,7 +95,7 @@ class Game:
                 if not self.music_started:
                     self.music_started = True  # Set the flag to True
                     sprite.play()
-                print(sprite.name)
+                # print(sprite.name)
                 collision_detected = True
                 break
 
@@ -131,12 +131,17 @@ class Game:
                 self.all_sprites.draw(self.player.rect.center)
                 # self.display_surface.blit(self.inventory_bar.image, self.inventory_bar.rect)
                 self.inventory_bar.draw()
-                self.inventory_bar.mouse_collision(pygame.mouse.get_pos()) # works hehe
+                # self.inventory_bar.mouse_collision(pygame.mouse.get_pos()) # works hehe
 
                 # Player inventory test
-                if len(self.inventory_bar.item_list) < 3:
-                    self.inventory_bar.add_item("1")
-                    
+                # for i in range(3 - len(self.inventory_bar.item_list)):
+                #     if i < 3 - len(self.inventory_bar.item_list):
+                #         self.inventory_bar.add_item(i + 1)
+                self.inventory_bar.add_item(1)
+                self.inventory_bar.add_item(2)
+                self.inventory_bar.add_item(3)
+                                    
+                # print(self.inventory_bar.items)
             else:
                 self.menu_sprites.draw(self.display_surface)
                 self.loadIntro()

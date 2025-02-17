@@ -1,5 +1,4 @@
 import pygame #type: ignore
-import os
 from pygame import mixer #type: ignore
 
 mixer.init()
@@ -16,8 +15,6 @@ class areaBGM(pygame.sprite.Sprite):
 
     def play(self):
         self.audio_file.play(loops=-1)
-        cwd = os.getcwd()
-        print(cwd)
     
     def stop(self):
         self.audio_file.stop()

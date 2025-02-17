@@ -1,5 +1,7 @@
-import pygame
+import pygame #type: ignore
 from classes.player import Player
+from classes.inventory_system import Item 
+
 
 class AllSprites(pygame.sprite.Group):
     def __init__(self):
@@ -13,10 +15,25 @@ class AllSprites(pygame.sprite.Group):
 
         ground_sprites = [sprite for sprite in self if hasattr(sprite, 'ground')]
         object_sprites = [sprite for sprite in self if not hasattr(sprite, 'ground')]
+        clicked_items = [sprite for sprite in self if isinstance(sprite, Item) and sprite.clicked]
+
 
         for layer in [ground_sprites, object_sprites]:
             for sprite in sorted(layer, key = lambda sprite: sprite.rect.centery):
                 self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
+                if sprite not in clicked_items:  # Don't draw clicked items here
+                    self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
+
+         # Draw clicked items last, so they appear on top
+        for item in clicked_items:
+            self.display_surface.blit(item.image, item.rect.topleft + self.offset)
+
+        # Reset clicked state after drawing
+        for item in clicked_items:
+            item.clicked = False
+
+
+        
 
         # get player pos
 
