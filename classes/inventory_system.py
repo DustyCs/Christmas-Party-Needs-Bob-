@@ -38,7 +38,7 @@ class InventoryBar():
 
         for i, item in enumerate(item_list):
             if i < 3:  # Limit to 3 items
-                new_item = Item((self.rect.left + 60 + i * 100, self.rect.centery + 10), self.items, item)
+                new_item = Item((self.rect.left + 60 + i * 100, self.rect.centery + 10), (self.items), item)
                 self.current_items.append(new_item)
         
         
@@ -47,7 +47,7 @@ class InventoryBar():
     # test
 
     def draw(self):
-        self.display_surface.blit(self.image, self.rect)
+        # self.display_surface.blit(self.image, self.rect)
         self.drawHolders()
 
         if self.item_list:
@@ -59,6 +59,8 @@ class InventoryBar():
     def draw_clicked_item(self, item):
         # Draw the clicked item on top of everything else
         self.display_surface.blit(item.image, item.rect)
+
+
 
     def drawHolders(self):
         for item_holder in self.item_holders:
@@ -109,6 +111,7 @@ class Item(pygame.sprite.Sprite):
     def onClick(self):
         print(f'Clicked on item {self.item_id}')
         self.clicked = not self.clicked
+        return self
 
     def drawItem(self):
         self.display_surface = pygame.display.get_surface()
