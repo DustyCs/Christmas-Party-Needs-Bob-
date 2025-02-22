@@ -1,0 +1,19 @@
+The code snippet you've highlighted is intended to draw clicked items on the display surface. If this isn't working as expected, there are a few potential reasons and areas to investigate:
+1.
+Item Click Detection: Ensure that the clicked attribute of the Item class is being set correctly when an item is clicked. If clicked is never set to True, the clicked_items list will be empty, and the loop won't execute.
+2.
+Item Image and Rect: Verify that each Item object has a valid image and rect attribute. If either of these is None or incorrectly set, the blit operation won't work as expected.
+3.
+Offset Calculation: Check if the offset is being calculated correctly. If the offset is incorrect, the items might be drawn off-screen.
+4.
+Display Surface: Ensure that self.display_surface is correctly initialized and is the active surface being displayed. If the surface isn't being updated or shown, changes won't be visible.
+5.
+Layering and Drawing Order: Since you have logic to draw items in layers, ensure that the clicked items are not being overwritten by other draw calls. The logic seems to handle this by drawing clicked items last, but double-check the order of operations.
+6.
+Debugging Output: The print("true") statement should output to the console whenever a clicked item is drawn. If you don't see this output, it indicates that the clicked_items list is empty or the loop isn't being executed.
+To further diagnose the issue, you can add additional print statements or logging to verify the state of the clicked_items list and the attributes of each Item object. Here's an example of how you might add some debugging output:
+Group
+        for item in clicked_items:
+            print(f"Drawing clicked item: {item}, Image: {item.image}, Rect: {item.rect}")
+            self.display_surface.blit(item.image, item.rect.topleft + self.offset)
+This will provide more detailed information about each item being drawn, which can help identify any issues with the item attributes or the drawing process.

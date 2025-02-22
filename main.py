@@ -31,7 +31,6 @@ class Game:
         self.collision_sprites = pygame.sprite.Group()
         self.location_area = pygame.sprite.Group()
         self.inventory_bar = InventoryBar((640, 40))
-        self.all_sprites.set_inventory_bar(self.inventory_bar)
 
         self.menu_sprites = pygame.sprite.Group()
         self.mainMenu = MainMenu(self.menu_sprites)
@@ -116,10 +115,6 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                clicked_item = self.inventory_bar.mouse_collision(pygame.mouse.get_pos())
-                if clicked_item:
-                    self.all_sprites.set_clicked_item(clicked_item)
 
             self.display_surface.fill((255, 255, 255))
 
