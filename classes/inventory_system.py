@@ -1,5 +1,12 @@
 import pygame # type: ignore
 
+#----------------------------------------------------------------
+# Inventory System
+# 
+# Link to item functions
+from items.items import items as item_dict
+#----------------------------------------------------------------
+
 class InventoryBar():
     def __init__(self, pos):
         self.display_surface = pygame.display.get_surface()
@@ -66,7 +73,12 @@ class InventoryBar():
         # Draw selected item in the middle of the screen
         for sprite in self.selected_item:
             print(" selected item id is ", sprite.item_id)
-            self.display_surface.blit(sprite.image, (1280/2, 720/2))
+            self.display_surface.blit(
+                pygame.transform.scale(sprite.image, (sprite.rect.width * 0.5, sprite.rect.height * 0.5)), 
+                (1280/2 - sprite.rect.width/2 + 50, 720/2 - sprite.rect.height/2))
+            
+            itemFunction = item_dict.get(sprite.item_id)
+            print(itemFunction)
          
     def create_item_holders(self):
         for i in range(3):

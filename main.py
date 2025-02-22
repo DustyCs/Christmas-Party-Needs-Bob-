@@ -138,8 +138,8 @@ class Game:
                 #     if i < 3 - len(self.inventory_bar.item_list):
                 #         self.inventory_bar.add_item(i + 1)
                 self.inventory_bar.add_item(1)
-                self.inventory_bar.add_item(2)
-                self.inventory_bar.add_item(3)
+                self.inventory_bar.add_item(103)
+                self.inventory_bar.add_item(102)
 
                 
                 # for item in self.inventory_bar.items:
