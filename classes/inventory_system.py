@@ -150,6 +150,10 @@ class InventoryInterface():
         self.display_surface = pygame.display.get_surface()
         self.display_surface.blit(self.image, self.rect)
 
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_pressed = pygame.mouse.get_pressed()[0]
+
+
         for i, item in enumerate(self.inventory_items):
             if item != [""]:
                 image = pygame.transform.scale(item.image, (item.image.get_width() * 1, item.image.get_height() * 1))
@@ -160,13 +164,20 @@ class InventoryInterface():
                     self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58))
                     item_position = (self.rect.left + 84 + (i - 5) * 100, self.rect.top + 36 + 58 + 58)
 
-                # Update the item's rect position
-                item.rect.topleft = item_position
+                # Click and Drag
+                if not item.clicked:
+                    item.rect.topleft = item_position
 
-                if item.rect.collidepoint(pygame.mouse.get_pos()):
-                    print("clicked")
+                self.display_surface.blit(image, item.rect.topleft)
 
-        # check if an item is being cliked on and then dragged:
+                if item.rect.collidepoint(mouse_pos):
+                    print("collide")
+                    if mouse_pressed:
+                        item.clicked = not item.clicked
+                        item.rect.center = mouse_pos
+    
+
+        # Maybe the blitting part is the problem? Bug fix tommorow 
    
 
               
