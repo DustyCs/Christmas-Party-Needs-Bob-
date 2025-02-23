@@ -73,12 +73,17 @@ class InventoryBar():
         # Draw selected item in the middle of the screen
         for sprite in self.selected_item:
             print(" selected item id is ", sprite.item_id)
-            self.display_surface.blit(
-                pygame.transform.scale(sprite.image, (sprite.rect.width * 0.5, sprite.rect.height * 0.5)), 
-                (1280/2 - sprite.rect.width/2 + 50, 720/2 - sprite.rect.height/2))
+            sprite_img = pygame.transform.scale(sprite.image, (sprite.rect.width * 0.5, sprite.rect.height * 0.5))
+            sprite_pos = (1280/2 - sprite.rect.width/2 + 50, 720/2 - sprite.rect.height/2)
             
             itemFunction = item_dict.get(sprite.item_id)
-            print(itemFunction)
+            useItemFunction = itemFunction[2]
+            useItemFunction(sprite)
+            self.display_surface.blit(sprite_img, sprite_pos)
+                  
+            
+            
+
          
     def create_item_holders(self):
         for i in range(3):
@@ -122,3 +127,33 @@ class Item(pygame.sprite.Sprite):
     def drawItem(self):
         self.display_surface = pygame.display.get_surface()
         self.display_surface.blit(self.image, self.rect)
+
+
+#----------------------------------------------------------------
+# Inventory Interface
+#----------------------------------------------------------------
+
+class InventoryInterface():
+    def __init__(self):
+        self.image = pygame.image.load("design/inventory/inventory.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.inventory_slots = 10
+        self.inventory_items = [ [""] for x in range(self.inventory_slots) ]
+    
+    def add_item(self, x, itemSprite):
+            self.inventory_items[x] = itemSprite
+
+    def show_inventory(self):
+        # print("toggled")
+        self.display_surface = pygame.display.get_surface()
+        self.display_surface.blit(self.image, self.rect)
+
+        # for i in range(self.inventory_slots):
+        #     item = self.inventory_items[i]
+        #     if item != [""]:
+        #         self.display_surface.blit(self.inventory_items[i][0].image, (220 + (i % 5) * 100, 160 + (i // 5) * 100))
+
+        for item in self.inventory_items:
+            if item != [""]:
+                self.display_surface.blit(item.image, (self.rect.left + (item.rect.left % 5) * 100, self.rect.top + (item.rect.top // 5) * 100))
+                

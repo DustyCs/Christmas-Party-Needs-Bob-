@@ -1,9 +1,11 @@
-# Christmas-Party-Needs-Bob-
+TODO
 
-# Clone first 
-## 1: run git clone https://github.com/DustyCs/Christmas-Party-Needs-Bob-.git in (git bash / cmd)
+For the inventory make it an array
 
-# File Not Found Error
-1. Check the current directory you are currently on
- - Make sure its on Christmas-Party-Needs-Bob-
+inventory = [
+    [""], and so on that way there is a place holder for the items which is the " "
+]
 
+this way its easier to check and create the "holders" structure
+
+so yes inventory would be drawn but would be a multi-dimensional array in the backside

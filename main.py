@@ -7,7 +7,7 @@ from classes.groups import AllSprites
 from classes.player import *
 from classes.background import *
 from classes.mainmenu import MainMenu, MenuButton
-from classes.inventory_system import InventoryBar, Item
+from classes.inventory_system import InventoryBar, Item, InventoryInterface
 from classes.background_music import areaBGM
 
 from audio.audio_config import *
@@ -31,6 +31,7 @@ class Game:
         self.collision_sprites = pygame.sprite.Group()
         self.location_area = pygame.sprite.Group()
         self.inventory_bar = InventoryBar((640, 40))
+        self.inventory = False
 
         self.menu_sprites = pygame.sprite.Group()
         self.mainMenu = MainMenu(self.menu_sprites)
@@ -59,6 +60,10 @@ class Game:
         for obj in map.get_layer_by_name('Locations'):
             areaBGM(obj.width, obj.height, obj.x * scale, obj.y * scale, obj.name, obj.name, self.location_area, scale)
             # print(obj.width, obj.height, obj.x * scale, obj.y * scale, obj.name)
+
+        # Load Inventory
+
+        self.inventory_interface = InventoryInterface()
 
     def loadIntro(self):
         self.success, self.video_image = self.game_intro.read()
@@ -115,6 +120,10 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        self.inventory = not self.inventory
+                    
 
             self.display_surface.fill((255, 255, 255))
 
@@ -127,12 +136,24 @@ class Game:
                 # for sprites in self.collision_sprites:
                 #     if sprites.name == "Gate 2":
                 #         sprites.kill()
+            
+                print(self.inventory_interface.inventory_items)
 
                 self.all_sprites.draw(self.player.rect.center)
-                # self.display_surface.blit(self.inventory_bar.image, self.inventory_bar.rect)
                 self.inventory_bar.draw()
-                # self.inventory_bar.mouse_collision(pygame.mouse.get_pos()) # works hehe
 
+                # Add items to inventory:w
+                # cleaner
+
+                for x, item in enumerate(self.inventory_bar.current_items):
+                    # print(x, item)
+                    self.inventory_interface.add_item(x, item)
+            
+                # check if E key is pressed to show inventory
+                if self.inventory:
+                    self.inventory_interface.show_inventory()
+
+                
                 # Player inventory test
                 # for i in range(3 - len(self.inventory_bar.item_list)):
                 #     if i < 3 - len(self.inventory_bar.item_list):
