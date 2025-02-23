@@ -142,7 +142,8 @@ class InventoryInterface():
         self.inventory_items = [ [""] for x in range(self.inventory_slots) ]
     
     def add_item(self, x, itemSprite):
-            self.inventory_items[x] = itemSprite
+            if x <= 10:
+                self.inventory_items[x] = itemSprite
 
     def show_inventory(self):
         # print("toggled")
@@ -152,8 +153,21 @@ class InventoryInterface():
         for i, item in enumerate(self.inventory_items):
             if item != [""]:
                 image = pygame.transform.scale(item.image, (item.image.get_width() * 1, item.image.get_height() * 1))
-                self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36))
-                # self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58)) # Row 2
+                if i <= 5:
+                    self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36))
+                    item_position = (self.rect.left + 84 + i * 100, self.rect.top + 36)
+                else:
+                    self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58))
+                    item_position = (self.rect.left + 84 + (i - 5) * 100, self.rect.top + 36 + 58 + 58)
+
+                # Update the item's rect position
+                item.rect.topleft = item_position
+
+                if item.rect.collidepoint(pygame.mouse.get_pos()):
+                    print("clicked")
+
+        # check if an item is being cliked on and then dragged:
+   
 
               
             
