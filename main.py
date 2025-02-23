@@ -142,9 +142,7 @@ class Game:
                 self.all_sprites.draw(self.player.rect.center)
                 self.inventory_bar.draw()
 
-                # Add items to inventory:w
-                # cleaner
-
+                # Add items to inventory
                 for x, item in enumerate(self.inventory_bar.current_items):
                     # print(x, item)
                     self.inventory_interface.add_item(x, item)
@@ -155,19 +153,10 @@ class Game:
 
                 
                 # Player inventory test
-                # for i in range(3 - len(self.inventory_bar.item_list)):
-                #     if i < 3 - len(self.inventory_bar.item_list):
-                #         self.inventory_bar.add_item(i + 1)
                 self.inventory_bar.add_item(1)
                 self.inventory_bar.add_item(103)
                 self.inventory_bar.add_item(102)
 
-                
-                # for item in self.inventory_bar.items:
-                #     if item not in self.inventory_bar.item_list:
-                #         self.all_sprites.append(item)
-                                    
-                # print(self.inventory_bar.items)
             else:
                 self.menu_sprites.draw(self.display_surface)
                 self.loadIntro()

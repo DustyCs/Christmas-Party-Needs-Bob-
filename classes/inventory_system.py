@@ -136,7 +136,8 @@ class Item(pygame.sprite.Sprite):
 class InventoryInterface():
     def __init__(self):
         self.image = pygame.image.load("design/inventory/inventory.png").convert_alpha()
-        self.rect = self.image.get_rect()
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * 2, self.image.get_height() * 2))
+        self.rect = self.image.get_rect(center=(1280/2, 720/2))
         self.inventory_slots = 10
         self.inventory_items = [ [""] for x in range(self.inventory_slots) ]
     
@@ -148,12 +149,11 @@ class InventoryInterface():
         self.display_surface = pygame.display.get_surface()
         self.display_surface.blit(self.image, self.rect)
 
-        # for i in range(self.inventory_slots):
-        #     item = self.inventory_items[i]
-        #     if item != [""]:
-        #         self.display_surface.blit(self.inventory_items[i][0].image, (220 + (i % 5) * 100, 160 + (i // 5) * 100))
-
-        for item in self.inventory_items:
+        for i, item in enumerate(self.inventory_items):
             if item != [""]:
-                self.display_surface.blit(item.image, (self.rect.left + (item.rect.left % 5) * 100, self.rect.top + (item.rect.top // 5) * 100))
-                
+                image = pygame.transform.scale(item.image, (item.image.get_width() * 1, item.image.get_height() * 1))
+                self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36))
+                # self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58)) # Row 2
+
+              
+            
