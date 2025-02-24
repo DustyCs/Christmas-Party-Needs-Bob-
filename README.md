@@ -1,11 +1,14 @@
-TODO
+# Changing Name and Project
 
-For the inventory make it an array
+## New Name
+### **A Slime's Small Hometown**
+### Release date Jan 10
 
-inventory = [
-    [""], and so on that way there is a place holder for the items which is the " "
-]
-
-this way its easier to check and create the "holders" structure
-
-so yes inventory would be drawn but would be a multi-dimensional array in the backside
+# Credits and Usage License
+## All Sprites, Images, Background are taken from **Craftpix** 
+### Under their **Free License** (https://craftpix.net/file-licenses/)
+## Music and Sounds Effects
+### Music by Liborio Conti
+### https://www.no–copyright–music.com
+### Sound Effects and Music 
+### https://freesound.org/
