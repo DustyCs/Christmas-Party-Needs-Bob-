@@ -175,10 +175,16 @@ class InventoryInterface():
                 new_index = self.get_collision_index(self.selected_item)
 
                 if new_index is not None and new_index != self.selected_index:
-                    # Swap items or move to empty slot
-                    self.inventory_items[self.selected_index], self.inventory_items[new_index] = (
-                        self.inventory_items[new_index], self.inventory_items[self.selected_index]
-                    )
+                    # Fix: Compare using item_id instead of direct object reference
+                    if self.inventory_items[new_index] is not None:
+                        if self.inventory_items[new_index].item_id != self.selected_item.item_id:
+                            (self.inventory_items[self.selected_index], 
+                            self.inventory_items[new_index]) = (self.inventory_items[new_index], 
+                                                                self.inventory_items[self.selected_index])
+                    else:
+                        # Move if slot is empty
+                        self.inventory_items[new_index] = self.selected_item
+                        self.inventory_items[self.selected_index] = None
 
                 # Reset item state
                 self.selected_item.clicked = False
@@ -205,17 +211,11 @@ class InventoryInterface():
                 image = pygame.transform.scale(item.image, (item.image.get_width(), item.image.get_height()))
                 item_position = self.get_slot_position(i)
 
-                if not item.clicked:
-                    item.rect.topleft = item_position  
-
-                # If item is clicked, follow the mouse
-
-                if self.selected_item is not None:
-                    if item.item_id == self.selected_item.item_id:
-                        item.rect.topleft = (mouse_pos[0] - self.offset_x, mouse_pos[1] - self.offset_y)
-                # print(self.selected_item)
+                # Fix: Compare using item_id to avoid duplication issue
+                if self.selected_item and item.item_id == self.selected_item.item_id:
+                    item.rect.topleft = (mouse_pos[0] - self.offset_x, mouse_pos[1] - self.offset_y)
+                else:
+                    item.rect.topleft = item_position  # Ensure items snap back
 
                 # Draw the item
                 self.display_surface.blit(image, item.rect.topleft)
-                        
-                
