@@ -143,6 +143,8 @@ class InventoryInterface():
 
         self.inventory_items = [None for _ in range(self.inventory_slots)]  # Store item objects instead of lists
         self.selected_item = None  # Track the currently selected item
+        self.selected_index = None  # The index of the item being dragged
+
         self.offset_x = 0
         self.offset_y = 0
     
@@ -150,20 +152,48 @@ class InventoryInterface():
             if x <= 10:
                 self.inventory_items[x] = itemSprite
 
+    def get_slot_position(self, index):
+        """Returns the screen position of a slot based on its index"""
+        if index < 5:
+            return (self.rect.left + 84 + index * 100, self.rect.top + 36)
+        else:
+            return (self.rect.left + 84 + (index - 5) * 100, self.rect.top + 36 + 58 + 58)
+
+
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
-            for item in self.inventory_items:
+            for i, item in enumerate(self.inventory_items):
                 if item and item.rect.collidepoint(mouse_pos):
                     self.selected_item = item
+                    self.selected_index = i
+                    self.selected_item.clicked = True
                     self.offset_x = mouse_pos[0] - item.rect.x
                     self.offset_y = mouse_pos[1] - item.rect.y
-                    item.clicked = True  # Mark item as clicked
-                    print(f"Selected item: {item}, ID: {id(item)}")
+                    break
+
         elif event.type == pygame.MOUSEBUTTONUP:
             if self.selected_item:
+                new_index = self.get_collision_index(self.selected_item)
+
+                if new_index is not None and new_index != self.selected_index:
+                    # Swap the items in the inventory list
+                    self.inventory_items[self.selected_index], self.inventory_items[new_index] = (
+                        self.inventory_items[new_index], self.inventory_items[self.selected_index]
+                    )
+
+                # Reset item state
                 self.selected_item.clicked = False
-                self.selected_item = None  # Reset selection
+                self.selected_item = None
+                self.selected_index = None
+
+    def get_collision_index(self, dragged_item):
+        """Checks if the dragged item is overlapping another item slot and returns the slot index"""
+        for i, item in enumerate(self.inventory_items):
+            if i != self.selected_index and item:
+                if dragged_item.rect.colliderect(item.rect):  # Check for overlap
+                    return i
+        return None  # No collision
 
 
     def show_inventory(self):
@@ -175,12 +205,13 @@ class InventoryInterface():
         for i, item in enumerate(self.inventory_items):
             if item:
                 image = pygame.transform.scale(item.image, (item.image.get_width(), item.image.get_height()))
-                
-                # Define the default position of the item
-                if i < 5:
-                    item_position = (self.rect.left + 84 + i * 100, self.rect.top + 36)
-                else:
-                    item_position = (self.rect.left + 84 + (i - 5) * 100, self.rect.top + 36 + 58 + 58)
+                item_position = self.get_slot_position(i)
+
+                # # Define the default position of the item
+                # if i < 5:
+                #     item_position = (self.rect.left + 84 + i * 100, self.rect.top + 36)
+                # else:
+                #     item_position = (self.rect.left + 84 + (i - 5) * 100, self.rect.top + 36 + 58 + 58)
 
                 if not item.clicked:
                     item.rect.topleft = item_position  # Reset position if not clicked
