@@ -137,7 +137,7 @@ class Game:
                 #     if sprites.name == "Gate 2":
                 #         sprites.kill()
             
-                print(self.inventory_interface.inventory_items)
+                # print(self.inventory_interface.inventory_items)
 
                 self.all_sprites.draw(self.player.rect.center)
                 self.inventory_bar.draw()

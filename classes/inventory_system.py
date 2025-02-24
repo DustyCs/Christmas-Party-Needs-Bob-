@@ -72,7 +72,7 @@ class InventoryBar():
 
         # Draw selected item in the middle of the screen
         for sprite in self.selected_item:
-            print(" selected item id is ", sprite.item_id)
+            # print(" selected item id is ", sprite.item_id)
             sprite_img = pygame.transform.scale(sprite.image, (sprite.rect.width * 0.5, sprite.rect.height * 0.5))
             sprite_pos = (1280/2 - sprite.rect.width/2 + 50, 720/2 - sprite.rect.height/2)
             
@@ -158,27 +158,32 @@ class InventoryInterface():
             if item != [""]:
                 image = pygame.transform.scale(item.image, (item.image.get_width() * 1, item.image.get_height() * 1))
                 if i <= 5:
-                    self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36))
+                    # self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36))
                     item_position = (self.rect.left + 84 + i * 100, self.rect.top + 36)
                 else:
-                    self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58))
+                    # self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58))
                     item_position = (self.rect.left + 84 + (i - 5) * 100, self.rect.top + 36 + 58 + 58)
+
+                if item.rect.collidepoint(mouse_pos):
+                    # print("collide")
+                    if mouse_pressed:
+                        item.clicked = not item.clicked
 
                 # Click and Drag
                 if not item.clicked:
                     item.rect.topleft = item_position
+                if item.clicked:
+                    print("clicked")
+                    item.rect.topleft = (mouse_pos[0] - item.rect.width/2, mouse_pos[1] - item.rect.height/2)
 
                 self.display_surface.blit(image, item.rect.topleft)
 
-                if item.rect.collidepoint(mouse_pos):
-                    print("collide")
-                    if mouse_pressed:
-                        item.clicked = not item.clicked
-                        item.rect.center = mouse_pos
-    
+                print(item.clicked)
+                        
+                
 
-        # Maybe the blitting part is the problem? Bug fix tommorow 
-   
+    
+       
 
               
             
