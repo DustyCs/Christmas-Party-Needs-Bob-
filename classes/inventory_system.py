@@ -139,51 +139,66 @@ class InventoryInterface():
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 2, self.image.get_height() * 2))
         self.rect = self.image.get_rect(center=(1280/2, 720/2))
         self.inventory_slots = 10
-        self.inventory_items = [ [""] for x in range(self.inventory_slots) ]
+        # self.inventory_items = [ [""] for x in range(self.inventory_slots) ]
+
+        self.inventory_items = [None for _ in range(self.inventory_slots)]  # Store item objects instead of lists
+        self.selected_item = None  # Track the currently selected item
+        self.offset_x = 0
+        self.offset_y = 0
     
     def add_item(self, x, itemSprite):
             if x <= 10:
                 self.inventory_items[x] = itemSprite
 
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            for item in self.inventory_items:
+                if item and item.rect.collidepoint(mouse_pos):
+                    self.selected_item = item
+                    self.offset_x = mouse_pos[0] - item.rect.x
+                    self.offset_y = mouse_pos[1] - item.rect.y
+                    item.clicked = True  # Mark item as clicked
+                    print(f"Selected item: {item}, ID: {id(item)}")
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if self.selected_item:
+                self.selected_item.clicked = False
+                self.selected_item = None  # Reset selection
+
+
     def show_inventory(self):
-        # print("toggled")
         self.display_surface = pygame.display.get_surface()
         self.display_surface.blit(self.image, self.rect)
 
         mouse_pos = pygame.mouse.get_pos()
-        mouse_pressed = pygame.mouse.get_pressed()[0]
-
 
         for i, item in enumerate(self.inventory_items):
-            if item != [""]:
-                image = pygame.transform.scale(item.image, (item.image.get_width() * 1, item.image.get_height() * 1))
-                if i <= 5:
-                    # self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36))
+            if item:
+                image = pygame.transform.scale(item.image, (item.image.get_width(), item.image.get_height()))
+                
+                # Define the default position of the item
+                if i < 5:
                     item_position = (self.rect.left + 84 + i * 100, self.rect.top + 36)
                 else:
-                    # self.display_surface.blit(image, (self.rect.left + 84 + i * 100, self.rect.top + 36 + 58 + 58))
                     item_position = (self.rect.left + 84 + (i - 5) * 100, self.rect.top + 36 + 58 + 58)
 
-                if item.rect.collidepoint(mouse_pos):
-                    # print("collide")
-                    if mouse_pressed:
-                        item.clicked = not item.clicked
-
-                # Click and Drag
                 if not item.clicked:
-                    item.rect.topleft = item_position
-                if item.clicked:
-                    print("clicked")
-                    item.rect.topleft = (mouse_pos[0] - item.rect.width/2, mouse_pos[1] - item.rect.height/2)
+                    item.rect.topleft = item_position  # Reset position if not clicked
 
+                
+
+                # If item is clicked, follow the mouse
+
+                if self.selected_item is not None:
+                    if item.item_id == self.selected_item.item_id:
+                        item.rect.topleft = (mouse_pos[0] - self.offset_x, mouse_pos[1] - self.offset_y)
+                print(self.selected_item)
+
+
+                # Draw the item
                 self.display_surface.blit(image, item.rect.topleft)
-
-                print(item.clicked)
                         
                 
 
     
        
-
-              
-            

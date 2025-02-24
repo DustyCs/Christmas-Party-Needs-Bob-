@@ -123,6 +123,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
                         self.inventory = not self.inventory
+                self.inventory_interface.handle_event(event)
                     
 
             self.display_surface.fill((255, 255, 255))
