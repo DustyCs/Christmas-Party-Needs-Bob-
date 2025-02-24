@@ -1,5 +1,7 @@
-import pygame
+import pygame #type: ignore
 from classes.player import Player
+from classes.inventory_system import Item, InventoryBar
+
 
 class AllSprites(pygame.sprite.Group):
     def __init__(self):
@@ -14,18 +16,19 @@ class AllSprites(pygame.sprite.Group):
         ground_sprites = [sprite for sprite in self if hasattr(sprite, 'ground')]
         object_sprites = [sprite for sprite in self if not hasattr(sprite, 'ground')]
 
+
         for layer in [ground_sprites, object_sprites]:
             for sprite in sorted(layer, key = lambda sprite: sprite.rect.centery):
                 self.display_surface.blit(sprite.image, sprite.rect.topleft + self.offset)
-                
+
         
 
         # get player pos
 
-        for key in object_sprites:
-            # print(type(key))
-            if isinstance(key, Player):
+        # for key in object_sprites:
+        #     # print(type(key))
+        #     if isinstance(key, Player):
             #    print(key.hitbox_rect)
-               pygame.draw.rect(self.display_surface, (0, 255, 255), (100, 100, key.hitbox_rect[2], key.hitbox_rect[3])) # x, y, width height
+            #    pygame.draw.rect(self.display_surface, (0, 255, 255), (100, 100, key.hitbox_rect[2], key.hitbox_rect[3])) # x, y, width height
 
           

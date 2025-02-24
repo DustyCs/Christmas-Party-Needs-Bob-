@@ -1,0 +1,12 @@
+[
+    {
+        "id": 102,
+        "name": "Normal Arrow",
+        "description": "An normal arrow used to strike a point"
+    },
+    {
+        "id": 103,
+        "name": "Slimed Arrow",
+        "description": "An slimed arrow used to stick to a point"
+    }
+] 

@@ -7,6 +7,8 @@ class Player(pygame.sprite.Sprite):
     player_velocity = None
 
     attack_key = None
+    current_items = []
+    current_area = None
 
     movement_state = "idle"
     animation_direction = None
@@ -71,7 +73,7 @@ class Player(pygame.sprite.Sprite):
             self.movement_state = "idle"
     
     def collision(self, direction):
-        for sprite in self.collision_sprites:
+        for sprite in self.collision_sprites:            
             if sprite.rect.colliderect(self.hitbox_rect):
                 if direction == "horizontal":
                     if self.direction.x > 0 and abs(self.hitbox_rect.right - sprite.rect.left) < sprite.rect[2]:  
@@ -85,6 +87,9 @@ class Player(pygame.sprite.Sprite):
                         self.hitbox_rect.top = sprite.rect.bottom
 
     def attack(self): pass
+
+    def addItem(self, item_id):
+        self.current_items.append(item_id)
         
     def getImage(self, sheet, frame_x, frame_y, width, height, scale, color):
         image = pygame.Surface((width, height)).convert_alpha()

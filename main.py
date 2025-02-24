@@ -1,70 +1,174 @@
 import pygame, time, os # type: ignore - VC can't detect
-import _asyncio
-from pytmx.util_pygame import load_pygame
+from pygame import mixer #type: ignore
+from pytmx.util_pygame import load_pygame # type: ignore
+import cv2 # type: ignore
 
+from classes.groups import AllSprites
 from classes.player import *
 from classes.background import *
-from utils.visual_test import LineTest
-from classes.groups import AllSprites
+from classes.mainmenu import MainMenu, MenuButton
+from classes.inventory_system import InventoryBar, Item, InventoryInterface
+from classes.background_music import areaBGM
 
-pygame.init()
+from audio.audio_config import *
 
-window = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-FPS = 30
-run = True
+# mixer.init()
+class Game:
+    def __init__(self):
+        pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=512)
+        pygame.init()
+        self.display_surface = pygame.display.set_mode((1280, 720))
+        pygame.display.set_caption("Bob's Adventure")
+        self.clock = pygame.time.Clock()
+        self.running = True
+        self.FPS = 30
+        self.main_menu = False
+        self.game_intro = cv2.VideoCapture('design/Main Menu/game_intro.mp4')
+        self.introFPS = self.game_intro.get(cv2.CAP_PROP_FPS)
+        self.success, self.video_image = self.game_intro.read()
+
+        self.all_sprites = AllSprites()
+        self.collision_sprites = pygame.sprite.Group()
+        self.location_area = pygame.sprite.Group()
+        self.inventory_bar = InventoryBar((640, 40))
+        self.inventory = False
+
+        self.menu_sprites = pygame.sprite.Group()
+        self.mainMenu = MainMenu(self.menu_sprites)
+        self.music_started = False  # Flag to track if the music has started
+
+        self.setup()
+
+    def setup(self):
+        map = load_pygame(os.path.join('design', 'tiled', 'World Map.tmx'))
+        scale = 2
+        tile_size = 32 * scale
+
+        for x, y, image in map.get_layer_by_name('Ground').tiles():
+            BackgroundSprite((x * tile_size , y * tile_size), image, self.all_sprites, scale)
+
+        for obj in map.get_layer_by_name('Tents'):
+            CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (self.all_sprites, self.collision_sprites), scale)
+        
+        for obj in map.get_layer_by_name('Collisions'):
+            CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (self.all_sprites, self.collision_sprites), scale, obj.name)
+            
+        for obj in map.get_layer_by_name('Entities'):
+            if obj.name == 'Player':
+                self.player = Player((obj.x * scale, obj.y * scale), self.all_sprites, self.collision_sprites)
+
+        for obj in map.get_layer_by_name('Locations'):
+            areaBGM(obj.width, obj.height, obj.x * scale, obj.y * scale, obj.name, obj.name, self.location_area, scale)
+            # print(obj.width, obj.height, obj.x * scale, obj.y * scale, obj.name)
+
+        # Load Inventory
+
+        self.inventory_interface = InventoryInterface()
+
+    def loadIntro(self):
+        self.success, self.video_image = self.game_intro.read()
+
+        if self.success:
+            height, width = self.video_image.shape[:2]
+            video_surf = pygame.image.frombuffer(self.video_image.tobytes(), (width, height), "BGR")
+            video_surf = pygame.transform.scale(video_surf, (1280, 720))
+            self.display_surface.blit(video_surf, (0, 0))
+
+    def handle_menu_buttons(self):
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_pressed = pygame.mouse.get_pressed()[0]
+
+        for sprite in self.menu_sprites:
+            if sprite.rect.collidepoint(mouse_pos) and mouse_pressed and not self.success:
+                if sprite.name == "Start":
+                    self.main_menu = False
+                    self.game_intro.release()
+                    break
+                elif sprite.name == "Exit":
+                    self.running = False
+                    print("Exiting...")
+                    break
+
+            if isinstance(sprite, MenuButton) and not self.success:
+                self.display_surface.blit(sprite.text, sprite.text_rect)
+
+    def bgmControl(self):
+        collision_detected = False
+
+        for sprite in self.location_area:
+            if self.player.rect.colliderect(sprite.rect):
+                if not self.music_started:
+                    self.music_started = True  # Set the flag to True
+                    sprite.play()
+                # print(sprite.name)
+                collision_detected = True
+                break
+
+        if not collision_detected and self.music_started:
+            print("Music stopped")
+            self.music_started = False
+            for sprite in self.location_area:
+                sprite.stop()
+
+    def run(self):
+        previous_time = time.time()
+            
+        while self.running:
+            delta_time = time.time() - previous_time
+            previous_time = time.time() 
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        self.inventory = not self.inventory
+                self.inventory_interface.handle_event(event)
+                    
+
+            self.display_surface.fill((255, 255, 255))
+
+            if not self.main_menu:        
+                self.bgmControl()    
+                keys = pygame.key.get_pressed()
+                self.player.movement(keys[pygame.K_w], keys[pygame.K_a], keys[pygame.K_s], keys[pygame.K_d], delta_time, self.FPS)
+
+                # game progression
+                # for sprites in self.collision_sprites:
+                #     if sprites.name == "Gate 2":
+                #         sprites.kill()
+            
+                # print(self.inventory_interface.inventory_items)
+
+                self.all_sprites.draw(self.player.rect.center)
+                self.inventory_bar.draw()
+
+                # Add items to inventory
+                for x, item in enumerate(self.inventory_bar.current_items):
+                    # print(x, item)
+                    self.inventory_interface.add_item(x, item)
+            
+                # check if E key is pressed to show inventory
+                if self.inventory:
+                    self.inventory_interface.show_inventory()
+
+                
+                # Player inventory test
+                self.inventory_bar.add_item(1)
+                self.inventory_bar.add_item(103)
+                self.inventory_bar.add_item(102)
+
+            else:
+                self.menu_sprites.draw(self.display_surface)
+                self.loadIntro()
+                self.handle_menu_buttons()              
+
+            pygame.display.flip()
+            self.clock.tick(self.introFPS if self.success else self.FPS)
 
 
-# Sprites
+        pygame.quit()
 
-all_sprites = AllSprites()
-collision_sprites = pygame.sprite.Group()
-
-# Player
-
-player = Player((2160, 4600), all_sprites, collision_sprites) 
-
-# Load Map
-
-
-def setup():
-    map = load_pygame(os.path.join('design', 'tiled', 'World Map.tmx'))
-    scale = 2
-
-    tile_size = 32 * scale
-
-    for x, y, image in map.get_layer_by_name('Ground').tiles():
-        BackgroundSprite((x * tile_size , y * tile_size), image, all_sprites, scale)
-
-    # for x, y, image in map.get_layer_by_name('Decorations').tiles():
-    #     BackgroundSprite((x * tile_size , y * tile_size), image, all_sprites, scale)
-
-    for obj in map.get_layer_by_name('Collisions'):
-        CollisionSprite((obj.x * scale, obj.y * scale), obj.image, (all_sprites, collision_sprites), scale)
-
-setup()
-
-# DT try not to mess around with anything connected to this - too painful to find the bugs it would cause in the future ;;
-previous_time = time.time()
-
-while run:
-    # DTimer
-    delta_time = time.time() - previous_time
-    previous_time = time.time() 
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-
-    keys = pygame.key.get_pressed()
-    player.movement(keys[pygame.K_w],keys[pygame.K_a],keys[pygame.K_s],keys[pygame.K_d], delta_time, FPS)
-
-
-    window.fill((255, 255, 255))
-    all_sprites.draw(player.rect.center)
-    pygame.draw.rect(window, (0, 255, 255), player.hitbox_rect)
-
-    pygame.display.flip()
-    clock.tick(FPS)
-
-pygame.quit()
+if __name__ == '__main__':
+    game = Game()
+    game.run()
